@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "electron ./index.js"
+    "start": "electron ./index.js",
+    "lint": "eslint ./"
   },
   "repository": "git@github.com:nerjs/simple-git-history.git",
   "author": "nerjs <karifan.stap@gmail.com>",

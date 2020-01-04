@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dev server</title>
+</head>
+<body>
+    <div id="root">
+        <style>
+            @keyframes pre-load-animate-color {
+                0% {
+                    border-color: red;
+                }
+                33% {
+                    border-color: blue;
+                }
+                66% {
+                    border-color: green;
+                }
+            }
+            @keyframes pre-load-animate-spin {
+                from {
+                    transform: rotate(0deg) translate(-50%, -50%);
+                }
+                to {
+                    transform: rotate(360deg) translate(-50%, -50%);
+                }
+            }
+            #pre-load {
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: 10px solid red;
+                width: 100px;
+                height: 100px;
+                border-radius: 50%;
+                border-top-color: transparent !important;
+                transform-origin: 0 0;
+                animation: pre-load-animate-color 10s ease infinite, pre-load-animate-spin 2s linear infinite;
+            }
+        </style>
+        <div id="pre-load"></div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

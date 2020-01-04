@@ -3,6 +3,8 @@ const url = require('url')
 let win = null
 
 module.exports = pathname => {
+    if (win) win.close()
+
     win = new BrowserWindow({
         width: 800,
         height: 600,

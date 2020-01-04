@@ -1,3 +1,4 @@
+require('dotenv').config()
 const webpack = require('webpack')
 const DotEnv = require('dotenv-webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -6,6 +7,9 @@ const path = require('path')
 const { NODE_ENV } = process.env
 
 const name = 'main'
+const OUTPUT_PATH = path.join(__dirname, '..', 'build', '/')
+const publicPath =
+    process.env.BUILD_TYPE === 'hot' ? `http://localhost:${process.env.DEV_PORT}/` : OUTPUT_PATH
 
 const config = {
     context: path.join(__dirname, 'src'),
@@ -14,8 +18,8 @@ const config = {
     },
     output: {
         filename: './js/[name].js',
-        path: path.join(__dirname, 'build'),
-        publicPath: '/',
+        path: OUTPUT_PATH,
+        publicPath,
     },
 
     mode: NODE_ENV,
@@ -107,7 +111,7 @@ if (process.env.NODE_ENV !== 'production') {
 if (process.env.BUILD_TYPE === 'hot') {
     config.entry[name] = [
         'react-hot-loader/patch',
-        'webpack-hot-middleware/client',
+        `webpack-hot-middleware/client?path=http://localhost:${process.env.DEV_PORT}/__webpack_hmr`,
         config.entry.main,
     ]
 
@@ -115,7 +119,5 @@ if (process.env.BUILD_TYPE === 'hot') {
 
     config.plugins.push(new webpack.HotModuleReplacementPlugin())
 }
-
-console.log(config)
 
 module.exports = config

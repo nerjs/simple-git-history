@@ -1,13 +1,13 @@
 require('dotenv').config()
 const path = require('path')
-const createApp = require('./utils/createApp')
-const hmr = require('./utils/hmr')
+const createApp = require('../utils/createApp')
+const hmr = require('../utils/hmr')
 
 const { DEV_PORT, BUILD_TYPE } = process.env
 
 const app = createApp({
     logger: 'dev',
-    static: [path.join(__dirname, 'static'), path.join(__dirname, 'build')],
+    static: [path.join(__dirname, '..', 'static'), path.join(__dirname, '..', 'build')],
 })
 
 if (BUILD_TYPE === 'hot') hmr(app, path.join(__dirname, 'webpack.config.js'))
@@ -17,7 +17,7 @@ app.use((req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
-    log.error(err)
+    console.error(err)
     res.end('Error!!!')
 })
 

@@ -8,8 +8,10 @@ module.exports = pathname => {
         height: 600,
         show: false,
         center: true,
-        nodeIntegration: true,
         devTools: true,
+        webPreferences: {
+            nodeIntegration: true,
+        },
     })
     win.loadURL(
         url.format({

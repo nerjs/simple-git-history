@@ -3,6 +3,15 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "server:dev": "NODE_ENV=development node ./renderer",
+    "server:hot": "NODE_ENV=development BUILD_TYPE=hot node ./renderer",
+    "build:dev": "NODE_ENV=development webpack --config ./renderer/webpack.config.js",
+    "build:prod": "NODE_ENV=production webpack --config ./renderer/webpack.config.js",
+    "build:hot": "NODE_ENV=development BUILD_TYPE=hot webpack --config ./renderer/webpack.config.js",
+    "clear": "rm -rf ./renderer/build",
+    "renderer:start": "npm run clear && npm-run-all --parallel server:hot build:hot",
+    "renderer:start:dev": "npm run clear && npm-run-all --parallel server:dev build:dev",
+    "renderer:start:prod": "npm run clear && npm-run-all --parallel server:prod build:prod",
     "start": "electron ./index.js",
     "lint": "eslint ./"
   },
@@ -10,13 +19,37 @@
   "author": "nerjs <karifan.stap@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "electron": "6.1.4"
+    "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
+    "@babel/plugin-transform-runtime": "^7.7.6",
+    "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.7.4",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-styled-components": "^1.10.6",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "dotenv-webpack": "^1.7.0",
+    "electron": "6.1.4",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "npm-run-all": "^4.1.5",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-hot-loader": "^4.12.18",
+    "react-router-dom": "^5.1.2",
+    "styled-components": "^4.4.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.41.5",
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-hot-middleware": "^2.25.0"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
     "eslint": "^6.4.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-prettier": "^3.1.0",
-    "prettier": "^1.18.2"
+    "prettier": "^1.18.2",
+    "webpack-cli": "^3.3.10"
   }
 }

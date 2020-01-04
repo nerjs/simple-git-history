@@ -58,3 +58,5 @@ dist
 .cache/
 
 yarn.lock
+
+*/build/

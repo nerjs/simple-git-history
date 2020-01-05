@@ -4,11 +4,10 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./",
-    "start:dev": "npm run clear && npm-run-all --parallel server:dev build:dev main:dev",
+    "start:dev": "npm run clear && npm-run-all --parallel build:dev main:dev",
     "start:hot": "npm run clear && npm-run-all --parallel server:hot build:hot main:hot",
     "start:prod": "npm run pre:start:prod && npm run main:prod",
     "pre:start:prod": "npm run clear && npm run build:prod",
-    "server:dev": "NODE_ENV=development node ./renderer",
     "server:hot": "NODE_ENV=development BUILD_TYPE=hot node ./renderer",
     "build:dev": "NODE_ENV=development webpack --config ./renderer/webpack.config.js",
     "build:prod": "NODE_ENV=production webpack --config ./renderer/webpack.config.js",

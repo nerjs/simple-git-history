@@ -1,11 +1,11 @@
 const { BrowserWindow } = require('electron')
 const url = require('url')
-let win = null
+let wins = {}
 
-module.exports = pathname => {
-    if (win) win.close()
+module.exports = (pathname, options = {}) => {
+    if (wins[pathname]) return wins[pathname]
 
-    win = new BrowserWindow({
+    const win = new BrowserWindow({
         width: 800,
         height: 600,
         show: false,
@@ -14,6 +14,7 @@ module.exports = pathname => {
         webPreferences: {
             nodeIntegration: true,
         },
+        ...options,
     })
     win.loadURL(
         url.format({
@@ -24,12 +25,16 @@ module.exports = pathname => {
     )
 
     win.on('closed', () => {
-        win = null
+        wins[pathname] = null
     })
 
     win.once('ready-to-show', () => {
         win.show()
     })
+
+    wins[pathname] = win
+
+    win.__wins = wins
 
     return win
 }

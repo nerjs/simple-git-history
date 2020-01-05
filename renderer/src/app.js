@@ -1,16 +1,8 @@
 import React from 'react'
-import styled from 'styled-components'
-
-const StylesContainer = styled.div`
-    color: blue;
-`
+import DataWrapper from './data'
 
 const App = () => {
-    return (
-        <StylesContainer>
-            test 2<hr />
-        </StylesContainer>
-    )
+    return <DataWrapper></DataWrapper>
 }
 
 export default App

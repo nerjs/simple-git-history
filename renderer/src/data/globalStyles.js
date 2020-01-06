@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
+import { getSize, getColor } from './theme'
 
 const GlobalStyles = createGlobalStyle`
     * {
@@ -10,6 +11,8 @@ const GlobalStyles = createGlobalStyle`
     body {
         margin: 0;
         padding: 0;
+        font-size: ${getSize('text')};
+        background-color: ${getColor('backgroundBody')};
     }
 `
 

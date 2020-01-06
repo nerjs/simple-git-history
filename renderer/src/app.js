@@ -6,10 +6,9 @@ import Header from './components/header'
 import Content from './components/content'
 
 const App = () => {
-    const [headerHeight, setHeaderHeight] = useState(40)
     const [sidebarWidth, setSidebarWidth] = useState(250)
 
-    const sizeControl = { headerHeight, sidebarWidth, setHeaderHeight, setSidebarWidth }
+    const sizeControl = { sidebarWidth, setSidebarWidth }
 
     return (
         <DataWrapper>

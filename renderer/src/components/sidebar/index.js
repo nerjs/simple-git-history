@@ -1,17 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
 import ResizeSidebar from './resize'
+import { getSize } from '../../data/theme'
 
 const SidebarContainer = styled.div.attrs(({ sidebarWidth, headerHeight }) => ({
     style: {
         width: sidebarWidth,
-        height: `calc(100% - ${headerHeight}px)`,
     },
 }))`
     position: relative;
     border: 1px solid red;
     background-color: #f003;
     transition: 0.3s;
+    height: calc(100% - ${getSize('headerHeight')});
 `
 
 const Sidebar = ({ headerHeight, sidebarWidth, setSidebarWidth }) => {

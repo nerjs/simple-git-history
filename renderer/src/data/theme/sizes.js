@@ -1,4 +1,4 @@
 export default {
-    text: 16,
+    text: 14,
     headerHeight: 40,
 }

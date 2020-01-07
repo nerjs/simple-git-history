@@ -96,6 +96,10 @@ const config = {
         }),
         new DotEnv(),
     ],
+
+    externals: {
+        electron: "require('electron')",
+    },
 }
 
 if (process.env.NODE_ENV !== 'production') {

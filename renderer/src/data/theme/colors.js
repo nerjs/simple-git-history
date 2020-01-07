@@ -4,6 +4,7 @@ export default {
     bcHoverHeader: '#2f363d',
     bcActiveHeader: '#24292e',
     bcBody: '#24292e',
+    overlayHeader: 'rgba(0, 0, 0, 0.5)',
 
     // border
     borderHeader: '#141414',

@@ -16,6 +16,7 @@ const HeaderContainer = styled.div`
 const Header = ({ headerHeight }) => {
     return (
         <HeaderContainer headerHeight={headerHeight}>
+            <Repo />
             <DropDownHeader title="title" label="label" icon={display} body={Repo} />
             <BtnHeader
                 title="titledwecfweafcarearfcrfrfva czsrf adawefwe xefweafadaewwedcarvarfareganakjrfbzrhfjzkcbhjzbjfdzsvbcszjd"

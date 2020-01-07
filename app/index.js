@@ -4,6 +4,7 @@ const path = require('path')
 const createWindow = require('../utils/createWindow')
 const devTools = require('../utils/devTools')
 const loading = require('./loading')
+require('./data')
 
 app.on('ready', async () => {
     await loading()

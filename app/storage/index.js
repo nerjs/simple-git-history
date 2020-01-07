@@ -10,10 +10,11 @@ const asyncWrite = util.promisify(fs.writeFile).bind(fs)
 const asyncReaddir = util.promisify(fs.readdir).bind(fs)
 const asyncUnlink = util.promisify(fs.unlink).bind(fs)
 
+const cache = new Map()
+
 class Storage {
-    cache = new Map()
     async get(name) {
-        if (this.cache.has(name)) return this.cache.get(name)
+        if (cache.has(name)) return cache.get(name)
         const filePath = path.join(FILES_DIR, name)
 
         try {
@@ -22,7 +23,7 @@ class Storage {
 
             const value = (await asyncRead(filePath)).toString()
 
-            this.cache.set(name, value)
+            cache.set(name, value)
 
             return value
         } catch (e) {
@@ -34,12 +35,12 @@ class Storage {
         if (!value) return this.delete(name)
         const filePath = path.join(FILES_DIR, name)
         await asyncWrite(filePath, `${value}`)
-        this.cache.set(name, `${value}`)
+        cache.set(name, `${value}`)
     }
 
     async delete(name) {
         const filePath = path.join(FILES_DIR, name)
-        this.cache.delete(name)
+        cache.delete(name)
         try {
             await asyncStat(filePath)
         } catch (e) {

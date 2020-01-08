@@ -17,6 +17,7 @@ const BtnHeaderContainer = styled.div`
     border-left-color: ${getColor('borderHeader')};
     border-right-color: ${getColor('borderHeader')};
     font-family: ${getFF('sansSerif')};
+    font-size: ${getSize('headerText')};
     background-color: ${({
         active,
         theme: {

@@ -5,9 +5,13 @@ export default {
     bcActiveHeader: '#24292e',
     bcBody: '#24292e',
     overlayHeader: 'rgba(0, 0, 0, 0.5)',
+    overlayAddModal: 'rgba(0, 0, 0, 0.7)',
+
+    bcInput: '#1d2125',
 
     // border
     borderHeader: '#141414',
+    border: '#111',
 
     // text
     primary: '#d1d5da',

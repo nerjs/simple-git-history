@@ -1,19 +1,48 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useReducer, useCallback } from 'react'
 import { ipcRenderer } from 'electron'
-import { START, REPOS_LOAD } from '../../../../utils/events'
+import {
+    START,
+    REPOS_LOAD,
+    LIST_REPOS,
+    CURRENT_REPO,
+    ADD_REPO,
+    CHANGE_CURRENT_REPO,
+    ADD_REPO_IN_LIST,
+    CHANGE_REPO,
+} from '../../../../utils/events'
+import reposListReducer from './reposListReducer'
 
 export default () => {
     const [reposLoad, setReposLoad] = useState(false)
     const [reposLoaded, setReposLoaded] = useState(false)
+    const [currentRepo, setCurrentRepo] = useState(null)
+    const [listRepos, dispatchList] = useReducer(reposListReducer, [])
 
     useEffect(() => {
-        ipcRenderer.on(REPOS_LOAD, (_, l) => {
-            setReposLoad(!!l)
-            if (!l && !reposLoaded) setReposLoaded(true)
-        })
+        const allEvents = {
+            [REPOS_LOAD]: (_, l) => {
+                setReposLoad(!!l)
+                if (!l && !reposLoaded) setReposLoaded(true)
+            },
+            [CURRENT_REPO]: (_, cr) => setCurrentRepo(cr),
+            [LIST_REPOS]: (_, list) => dispatchList({ type: LIST_REPOS, payload: list }),
+            [CHANGE_CURRENT_REPO]: (_, str) => setCurrentRepo(str),
+            [ADD_REPO_IN_LIST]: (_, payload) => dispatchList({ type: ADD_REPO_IN_LIST, payload }),
+            [CHANGE_REPO]: (_, payload) => dispatchList({ type: CHANGE_REPO, payload }),
+        }
+
+        Object.keys(allEvents).forEach(key => ipcRenderer.on(key, allEvents[key]))
 
         ipcRenderer.send(START)
+
+        return () =>
+            Object.keys(allEvents).forEach(key => ipcRenderer.removeListener(key, allEvents[key]))
     }, [])
 
-    return { reposLoad, reposLoaded }
+    const addRepo = useCallback(
+        strPath => console.info(strPath) || ipcRenderer.send(ADD_REPO, strPath),
+        [],
+    )
+
+    return { reposLoad, reposLoaded, currentRepo, listRepos, addRepo }
 }

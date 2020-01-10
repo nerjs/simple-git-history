@@ -5,7 +5,11 @@ import AddBtn from './add'
 import { TextInput } from '../../input'
 import RepoItem from './item'
 
-const Input = styled(TextInput)``
+const Input = styled(TextInput)`
+    width: 90%;
+    margin: 3px auto;
+    display: block;
+`
 
 const BodyReposContainer = styled.div``
 

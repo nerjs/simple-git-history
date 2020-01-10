@@ -9,7 +9,7 @@ const BodyWrapper = styled.div`
     bottom: 0;
     z-index: 200;
     background-color: ${getColor('bcActiveHeader')};
-    padding: 3px 5px;
+    padding: 3px 0px;
     border: 1px solid ${getColor('borderHeader')};
     border-top-color: transparent;
     border-bottom-color: transparent;

@@ -13,6 +13,10 @@ export default {
     borderHeader: '#141414',
     border: '#111',
 
+    // menu
+    bcActiveMenu: '#4d565f',
+    bcHoverMenu: '#2f363d',
+
     // text
     primary: '#d1d5da',
     secondary: '#959da5',

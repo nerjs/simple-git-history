@@ -10,7 +10,7 @@ const Input = styled(TextInput)``
 const BodyReposContainer = styled.div``
 
 const ReposListContainer = styled.div`
-    margin: 20px 5px;
+    margin: 20px 0px;
 `
 
 const filterList = (value, current) => ({ name, pathname }) => {

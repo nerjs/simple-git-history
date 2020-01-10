@@ -23,27 +23,46 @@ const RepoItemContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     font-size: ${getSize('textMenu')};
-    margin: 5px 2px;
+    margin: 3px 0px;
     padding: 8px 0;
-    border-radius: 5px;
     align-items: center;
     cursor: pointer;
-    box-shadow: 0 0 5px #0003;
+    border: 1px solid transparent;
     transition: 0.1s;
 
     &:hover {
-        background-color: ${getColor('bcHoverHeader')};
-        box-shadow: 2px 0 4px #0008;
+        background-color: ${getColor('bcHoverMenu')};
+        border-top-color: #0008;
+        border-bottom-color: #0008;
     }
 
     &:active {
-        box-shadow: 1px 0 2px #0008;
+        box-shadow: inset 1px 0 2px #fff8;
+        border-color: #000;
     }
 
     ${({ error }) =>
         error
             ? css`
-                  border: 1px solid #ff807d99;
+                  border-color: #ff807d99;
+                  padding-bottom: 2px;
+
+                  &:hover {
+                      border-color: #ff807d99;
+                  }
+              `
+            : ''}
+
+    ${({ active }) =>
+        active
+            ? css`
+                  background-color: ${getColor('bcActiveMenu')};
+                  border-color: #0008;
+
+                  &:hover {
+                      background-color: ${getColor('bcActiveMenu')};
+                      cursor: default;
+                  }
               `
             : ''}
 `
@@ -90,7 +109,7 @@ const RepoItem = ({ name, pathname, loading, error, current }) => {
         : display
 
     return (
-        <RepoItemContainer error={error}>
+        <RepoItemContainer error={error} active={pathname === current}>
             <RepoItemIcon loadingItem={loading} error={error}>
                 <Icon icon={icon} />
             </RepoItemIcon>

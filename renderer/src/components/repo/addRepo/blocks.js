@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components'
 import { getColor, getSize } from '../../../data/theme'
+import { TextInput } from '../../input'
 
 export const AddRepoContainer = styled.div`
     position: fixed;
@@ -57,14 +58,7 @@ export const MetaTitle = styled.h3`
     font-size: 14px;
 `
 
-export const Input = styled.input`
-    border: 1px solid ${getColor('borderHeader')};
-    box-shadow: none;
+export const Input = styled(TextInput)`
     width: 100%;
-    padding: 2px 10px;
-    font-size: ${getSize('text')};
-    background-color: ${getColor('bcInput')};
-    color: ${getColor('secondary')};
-    outline: none;
     margin-right: 10px;
 `

@@ -1,5 +1,5 @@
-import styled, { css } from 'styled-components'
-import { getColor, getSize } from '../../../data/theme'
+import styled from 'styled-components'
+import { getColor } from '../../../data/theme'
 import { TextInput } from '../../input'
 
 export const AddRepoContainer = styled.div`

@@ -1,42 +1,41 @@
-import React from 'react'
+import React, { useState, useCallback } from 'react'
 import styled from 'styled-components'
-import { BtnPrimary, BtnSecondary } from '../../btn'
+import { useApi } from '../../../data/api'
 import AddBtn from './add'
 import { TextInput } from '../../input'
-const { remote } = require('electron')
-const { Menu, MenuItem } = remote
-
-const menu = new Menu()
-menu.append(
-    new MenuItem({
-        label: 'MenuItem1',
-        click() {
-            console.log('item 1 clicked')
-        },
-    }),
-)
-menu.append(new MenuItem({ type: 'separator' }))
-menu.append(new MenuItem({ label: 'MenuItem2', type: 'checkbox', checked: true }))
-
-// window.addEventListener(
-//     'contextmenu',
-//     e => {
-//         e.preventDefault()
-//         menu.popup({ window: remote.getCurrentWindow() })
-//     },
-//     false,
-// )
+import RepoItem from './item'
 
 const Input = styled(TextInput)``
 
 const BodyReposContainer = styled.div``
 
-const BodyRepos = ({ current, list }) => {
+const ReposListContainer = styled.div`
+    margin: 20px 5px;
+`
+
+const filterList = (value, current) => ({ name, pathname }) => {
+    if (!value || value.length === 0 || pathname === current) return true
+    return pathname.search(value) >= 0 || (name ? name.search(value) >= 0 : false)
+}
+
+const BodyRepos = () => {
+    const { currentRepo, listRepos } = useApi()
+    const [filterValue, setFilterValue] = useState('')
+    const handleChangeFilter = useCallback(({ target }) => setFilterValue(target.value), [
+        setFilterValue,
+    ])
+
+    const resultList = listRepos.filter(filterList(filterValue, currentRepo))
+
     return (
         <BodyReposContainer>
             <AddBtn />
-
-            <Input placeholder="filter..." />
+            <Input onChange={handleChangeFilter} value={filterValue} placeholder="filter..." />
+            <ReposListContainer>
+                {resultList.map(item => (
+                    <RepoItem key={item.pathname} {...item} current={currentRepo} />
+                ))}
+            </ReposListContainer>
         </BodyReposContainer>
     )
 }

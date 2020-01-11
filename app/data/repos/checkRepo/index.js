@@ -1,7 +1,7 @@
 const fs = require('fs')
 const util = require('util')
 const path = require('path')
-const { CHANGE_REPO } = require('../../../utils/events')
+const { CHANGE_REPO } = require('../../../../utils/events')
 const getName = require('./getName')
 
 const asyncStat = util.promisify(fs.stat).bind(fs)
@@ -11,7 +11,6 @@ module.exports = async (sender, repos, pathname) => {
     const repo = repos.find(r => r.pathname === pathname)
     if (!repo) return
     sender.send(CHANGE_REPO, { ...repo, loading: true })
-
     try {
         const stat = await asyncStat(pathname)
         if (!stat.isDirectory()) throw new Error(`path ${pathname} is not directory`)

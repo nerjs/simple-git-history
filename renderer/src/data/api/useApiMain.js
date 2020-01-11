@@ -31,6 +31,7 @@ export default () => {
             [CHANGE_CURRENT_REPO]: (_, str) => setCurrentRepo(str),
             [ADD_REPO_IN_LIST]: (_, payload) => dispatchList({ type: ADD_REPO_IN_LIST, payload }),
             [CHANGE_REPO]: (_, payload) => dispatchList({ type: CHANGE_REPO, payload }),
+            [REMOVE_REPO]: (_, payload) => dispatchList({ type: REMOVE_REPO, payload }),
         }
 
         Object.keys(allEvents).forEach(key => ipcRenderer.on(key, allEvents[key]))

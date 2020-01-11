@@ -1,4 +1,4 @@
-import { CHANGE_REPO, LIST_REPOS, ADD_REPO_IN_LIST } from '../../../../utils/events'
+import { CHANGE_REPO, LIST_REPOS, ADD_REPO_IN_LIST, REMOVE_REPO } from '../../../../utils/events'
 
 export default (list, { type, payload }) => {
     switch (type) {
@@ -10,6 +10,8 @@ export default (list, { type, payload }) => {
             return list.map(item =>
                 item.pathname === payload.pathname ? { ...item, ...payload } : item,
             )
+        case REMOVE_REPO:
+            return list.filter(({ pathname }) => pathname !== payload)
         default:
             return list
     }

@@ -1,12 +1,15 @@
 const EE = require('events')
 const path = require('path')
 const gitUrlParse = require('git-url-parse')
+const qs = require('query-string')
 const exec = require('../../utils/exec')
+const { branchFormat } = require('./utils/formats')
 
 class Git extends EE {
     constructor(pathname) {
         super()
         this.pathname = pathname
+        this.branchFormat = branchFormat
     }
 
     async git(str) {
@@ -24,6 +27,34 @@ class Git extends EE {
 
         return gitUrlParse.stringify(gitUrlParse(naturalUrl), 'https')
     }
+
+    async branch() {
+        console.log('--', qs.stringify(this.branchFormat, { encode: false }))
+        const res = await this.git(
+            `branch --format="${qs.stringify(this.branchFormat, { encode: false })}"`,
+        )
+
+        return res
+            .split('\n')
+            .filter(v => !!v)
+            .map(v => qs.parse(v))
+            .map(({ head, remote, ...v }) => ({
+                ...v,
+                head: head.trim() ? true : false,
+                remote: remote.trim() || null,
+            }))
+    }
 }
+
+// ;(async () => {
+//     const git = new Git('/Users/mac/work/parser')
+//     console.log(
+//         (await git.branch()).filter(({ name }) =>
+//             ['master', 'develop', 'test_git_branch', 'origin/refactoring-handlers'].find(
+//                 n => n === name,
+//             ),
+//         ),
+//     )
+// })().catch(console.error)
 
 module.exports = Git

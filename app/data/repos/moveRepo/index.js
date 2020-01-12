@@ -1,7 +1,12 @@
 const { ipcMain } = require('electron')
-const { REMOVE_REPO, SELECT_REPO, CURRENT_REPO } = require('../../../../utils/events')
+const fs = require('fs')
+const util = require('util')
+const { REMOVE_REPO, SELECT_REPO, CURRENT_REPO, OPEN_REPO } = require('../../../../utils/events')
 const checkRepo = require('../checkRepo')
-const { CURRENT } = require('../vars')
+const { CURRENT, REPOS } = require('../vars')
+const open = require('./open')
+
+const asyncStat = util.promisify(fs.stat).bind(fs)
 
 let isSelectedRepo = false
 
@@ -27,14 +32,32 @@ module.exports = (sender, storage, repos) => {
             await handlerSelectRepo(_, repos[0].pathname)
         }
 
+        await storage.set(REPOS, repos.map(r => r.pathname).join('\n'))
         sender.send(REMOVE_REPO, pathname)
+    }
+
+    const handlerOpenRepo = async (_, { type, pathname }) => {
+        const repo = repos.find(r => r.pathname === pathname)
+        if (!repo) return
+
+        try {
+            const stat = await asyncStat(pathname)
+            if (!stat.isDirectory()) throw new Error(`${pathname} is not directory!`)
+        } catch (e) {
+            console.error(e)
+            return
+        }
+
+        await open(type, repo)
     }
 
     ipcMain.on(SELECT_REPO, handlerSelectRepo)
     ipcMain.on(REMOVE_REPO, handlerRemoveRepo)
+    ipcMain.on(OPEN_REPO, handlerOpenRepo)
 
     return () => {
         ipcMain.removeListener(SELECT_REPO, handlerSelectRepo)
         ipcMain.removeListener(REMOVE_REPO, handlerRemoveRepo)
+        ipcMain.removeListener(OPEN_REPO, handlerOpenRepo)
     }
 }

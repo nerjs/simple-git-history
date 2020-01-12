@@ -23,7 +23,7 @@ const filterList = (value, current) => ({ name, pathname }) => {
 }
 
 const BodyRepos = () => {
-    const { currentRepo, listRepos, removeRepo, selectRepo } = useApi()
+    const { currentRepo, listRepos, removeRepo, selectRepo, openRepo } = useApi()
     const [filterValue, setFilterValue] = useState('')
     const handleChangeFilter = useCallback(({ target }) => setFilterValue(target.value), [
         setFilterValue,
@@ -43,6 +43,7 @@ const BodyRepos = () => {
                         current={currentRepo}
                         removeRepo={removeRepo}
                         selectRepo={selectRepo}
+                        openRepo={openRepo}
                     />
                 ))}
             </ReposListContainer>

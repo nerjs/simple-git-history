@@ -4,13 +4,25 @@ import { RepoItemContainer, RepoItemError, RepoItemIcon, RepoItemTitle } from '.
 import getIcon from './getIcon'
 import useControls from './useControls'
 
-const RepoItem = ({ name, pathname, loading, error, current, selectRepo, removeRepo }) => {
+const RepoItem = ({
+    name,
+    pathname,
+    url,
+    loading,
+    error,
+    current,
+    selectRepo,
+    removeRepo,
+    openRepo,
+}) => {
     const icon = getIcon({ pathname, loading, error, current })
     const { handleContextMenu, handleClick } = useControls({
         selectRepo,
         removeRepo,
+        openRepo,
         pathname,
         loading,
+        url,
     })
 
     return (

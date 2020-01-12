@@ -11,6 +11,7 @@ import {
     CHANGE_REPO,
     REMOVE_REPO,
     SELECT_REPO,
+    OPEN_REPO,
 } from '../../../../utils/events'
 import reposListReducer from './reposListReducer'
 
@@ -45,6 +46,16 @@ export default () => {
     const addRepo = useCallback(strPath => ipcRenderer.send(ADD_REPO, strPath), [])
     const selectRepo = useCallback(strPath => ipcRenderer.send(SELECT_REPO, strPath), [])
     const removeRepo = useCallback(strPath => ipcRenderer.send(REMOVE_REPO, strPath), [])
+    const openRepo = useCallback(data => ipcRenderer.send(OPEN_REPO, data))
 
-    return { reposLoad, reposLoaded, currentRepo, listRepos, addRepo, selectRepo, removeRepo }
+    return {
+        reposLoad,
+        reposLoaded,
+        currentRepo,
+        listRepos,
+        addRepo,
+        selectRepo,
+        removeRepo,
+        openRepo,
+    }
 }

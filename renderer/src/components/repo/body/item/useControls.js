@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import createContextMenu from './createContextMenu'
 
-export default ({ selectRepo, removeRepo, pathname, loading }) => {
+export default ({ selectRepo, removeRepo, openRepo, pathname, loading, url }) => {
     const [menu, setMenu] = useState(null)
 
     const handleClick = useCallback(() => {
@@ -15,7 +15,7 @@ export default ({ selectRepo, removeRepo, pathname, loading }) => {
     }, [loading, menu])
 
     useEffect(() => {
-        const menu = createContextMenu({ selectRepo, removeRepo, pathname })
+        const menu = createContextMenu({ selectRepo, removeRepo, openRepo, pathname, url })
 
         setMenu(menu)
         return () => menu.destroy()

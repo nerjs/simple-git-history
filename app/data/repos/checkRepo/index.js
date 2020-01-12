@@ -3,6 +3,7 @@ const util = require('util')
 const path = require('path')
 const { CHANGE_REPO } = require('../../../../utils/events')
 const getName = require('./getName')
+const Git = require('../../../git')
 
 const asyncStat = util.promisify(fs.stat).bind(fs)
 const asyncRead = util.promisify(fs.readFile).bind(fs)
@@ -34,6 +35,12 @@ module.exports = async (sender, repos, pathname) => {
         }
 
         repo.name = getName(repos, pathname, pkg)
+
+        const git = new Git(pathname)
+
+        try {
+            repo.url = await git.getUrl()
+        } catch (e) {}
 
         sender.send(CHANGE_REPO, { ...repo })
     } catch (e) {

@@ -1,4 +1,4 @@
-const { ipcMain } = require('electron')
+const { ipcMain, Notification } = require('electron')
 const fs = require('fs')
 const util = require('util')
 const { REMOVE_REPO, SELECT_REPO, CURRENT_REPO, OPEN_REPO } = require('../../../../utils/events')
@@ -44,6 +44,12 @@ module.exports = (sender, storage, repos) => {
             const stat = await asyncStat(pathname)
             if (!stat.isDirectory()) throw new Error(`${pathname} is not directory!`)
         } catch (e) {
+            const ntf = new Notification({
+                title: e.name || 'Error',
+                body: e.message,
+            })
+            ntf.show()
+            setTimeout(() => ntf.destroy(), 10000)
             console.error(e)
             return
         }

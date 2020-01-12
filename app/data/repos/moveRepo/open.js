@@ -1,6 +1,5 @@
 const { shell } = require('electron')
-const { exec } = require('child_process')
-const Git = require('../../../git')
+const exec = require('../../../../utils/exec')
 
 const TERM = /* process.env.TERM_PROGRAM || */ 'iTerm.app'
 

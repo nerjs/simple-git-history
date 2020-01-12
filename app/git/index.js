@@ -1,7 +1,7 @@
 const EE = require('events')
 const path = require('path')
 const gitUrlParse = require('git-url-parse')
-const exec = require('./utils/exec')
+const exec = require('../../utils/exec')
 
 class Git extends EE {
     constructor(pathname) {

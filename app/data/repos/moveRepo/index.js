@@ -1,7 +1,12 @@
-const { ipcMain, Notification } = require('electron')
+const { ipcMain, Notification, app } = require('electron')
 const fs = require('fs')
 const util = require('util')
-const { REMOVE_REPO, SELECT_REPO, CURRENT_REPO, OPEN_REPO } = require('../../../../utils/events')
+const {
+    REMOVE_REPO,
+    SELECT_REPO,
+    OPEN_REPO,
+    CHANGE_CURRENT_REPO,
+} = require('../../../../utils/events')
 const checkRepo = require('../checkRepo')
 const { CURRENT, REPOS } = require('../vars')
 const open = require('./open')
@@ -16,7 +21,8 @@ module.exports = (sender, storage, repos) => {
         isSelectedRepo = true
         await checkRepo(sender, repos, pathname)
         await storage.set(CURRENT, pathname)
-        sender.send(CURRENT_REPO, pathname)
+        sender.send(CHANGE_CURRENT_REPO, pathname)
+        app.emit(CHANGE_CURRENT_REPO)
         isSelectedRepo = false
     }
 

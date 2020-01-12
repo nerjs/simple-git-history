@@ -1,4 +1,4 @@
-import { CHANGE_REPO, LIST_REPOS, ADD_REPO_IN_LIST, REMOVE_REPO } from '../../../../utils/events'
+import { CHANGE_REPO, LIST_REPOS, ADD_REPO_IN_LIST, REMOVE_REPO } from '../../../../../utils/events'
 
 export default (list, { type, payload }) => {
     switch (type) {

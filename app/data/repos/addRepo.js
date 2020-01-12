@@ -1,4 +1,4 @@
-const { ipcMain } = require('electron')
+const { ipcMain, app } = require('electron')
 const { ADD_REPO, ADD_REPO_IN_LIST, CHANGE_CURRENT_REPO } = require('../../../utils/events')
 const { CURRENT, REPOS } = require('./vars')
 const checkRepo = require('./checkRepo')
@@ -18,6 +18,7 @@ module.exports = (sender, storage, repos) => {
         ])
 
         sender.send(CHANGE_CURRENT_REPO, str)
+        app.emit(CHANGE_CURRENT_REPO)
 
         checkRepo(sender, repos, str)
     }

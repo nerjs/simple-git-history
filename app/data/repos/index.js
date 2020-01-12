@@ -5,7 +5,12 @@ const moveRepo = require('./moveRepo')
 module.exports = async (sender, storage) => {
     const repos = await loadData(sender, storage)
 
-    addRepo(sender, storage, repos)
+    const removeAddrepo = addRepo(sender, storage, repos)
 
-    moveRepo(sender, storage, repos)
+    const removeMoveRepo = moveRepo(sender, storage, repos)
+
+    return () => {
+        removeAddrepo()
+        removeMoveRepo()
+    }
 }

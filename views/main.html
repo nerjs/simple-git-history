@@ -9,14 +9,8 @@
     <div id='root'></div>
 
     <script>
-        const path = require('path')
-        global.STATIC_DIR = path.join(__dirname, '..', 'static')
-        global.BUILD_DIR = path.join(__dirname, '..', 'build')
-        const requireSrc = require('../utils/scriptRequire')
-
-        ;(async () => {
-           await requireSrc('/js/main.js') 
-        })()
+        require('../utils/start')
+        require('../build/js/main')
         
     </script>
 </body>

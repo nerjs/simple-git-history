@@ -10,8 +10,6 @@ app.on('ready', async () => {
     await loading()
     const win = createWindow(path.join(__dirname, '..', 'views', 'main.html'))
 
-    win.webContents.on('keypress', console.log)
-
     devTools(win)
 
     win.maximize()

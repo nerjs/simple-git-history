@@ -4,7 +4,7 @@ const { CURRENT, REPOS } = require('./vars')
 const checkRepo = require('./checkRepo')
 
 module.exports = (sender, storage, repos) => {
-    ipcMain.on(ADD_REPO, async (_, str) => {
+    const handlerAddRepo = async (_, str) => {
         if (!str) return
 
         if (!repos.find(({ pathname }) => pathname === str)) {
@@ -20,5 +20,9 @@ module.exports = (sender, storage, repos) => {
         sender.send(CHANGE_CURRENT_REPO, str)
 
         checkRepo(sender, repos, str)
-    })
+    }
+
+    ipcMain.on(ADD_REPO, handlerAddRepo)
+
+    return () => ipcMain.removeListener(ADD_REPO, handlerAddRepo)
 }

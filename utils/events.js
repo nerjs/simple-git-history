@@ -1,4 +1,5 @@
 exports.START = 'main:start'
+exports.END = 'main:end'
 
 exports.REPOS_LOAD = 'repos:load'
 exports.LIST_REPOS = 'repos:list'

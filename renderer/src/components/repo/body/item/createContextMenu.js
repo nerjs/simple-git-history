@@ -14,6 +14,12 @@ export default ({ selectRepo, removeRepo, openRepo, pathname, url }) => {
 
     menu.append(
         new MenuItem({
+            type: 'separator',
+        }),
+    )
+
+    menu.append(
+        new MenuItem({
             label: 'Open Finder',
             click: () => openRepo({ type: 'file', pathname }),
         }),
@@ -26,19 +32,24 @@ export default ({ selectRepo, removeRepo, openRepo, pathname, url }) => {
         }),
     )
 
-    if (url) {
-        menu.append(
-            new MenuItem({
-                label: 'Open URL',
-                click: () => openRepo({ type: 'url', pathname }),
-            }),
-        )
-    }
+    menu.append(
+        new MenuItem({
+            label: 'Open URL',
+            click: () => openRepo({ type: 'url', pathname }),
+            enabled: !!url,
+        }),
+    )
 
     menu.append(
         new MenuItem({
             label: 'Open Terminal',
             click: () => openRepo({ type: 'terminal', pathname }),
+        }),
+    )
+
+    menu.append(
+        new MenuItem({
+            type: 'separator',
         }),
     )
 

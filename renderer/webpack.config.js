@@ -99,6 +99,7 @@ const config = {
 
     externals: {
         electron: "require('electron')",
+        path: "require('path')",
     },
 }
 

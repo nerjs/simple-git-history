@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from 'styled-components'
-import { getSize, getColor } from '../../../../data/theme'
+import { getColor, getSize } from '../../data/theme'
 
 const blink = keyframes`
     from {
@@ -13,7 +13,7 @@ const blink = keyframes`
     }
 `
 
-export const RepoItemContainer = styled.div`
+export const MenuItemContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     font-size: ${getSize('textMenu')};
@@ -60,7 +60,7 @@ export const RepoItemContainer = styled.div`
               `
             : ''}
 `
-export const RepoItemIcon = styled.div`
+export const MenuItemIcon = styled.div`
     width: 30px;
     text-align: center;
 
@@ -80,11 +80,11 @@ export const RepoItemIcon = styled.div`
     }
 `
 
-export const RepoItemTitle = styled.div`
+export const MenuItemTitle = styled.div`
     width: calc(100% - 30px);
 `
 
-export const RepoItemError = styled.div`
+export const MenuItemError = styled.div`
     width: 100%;
     margin: 2px 3px;
     margin-left: 30px;

@@ -1,19 +1,14 @@
 import React, { useState, useCallback } from 'react'
-import { Icon } from 'react-icons-kit'
-import { remove } from 'react-icons-kit/fa/remove'
+import styled from 'styled-components'
 import { remote } from 'electron'
-import { BtnPrimary, BtnSecondary } from '../../btn'
-import {
-    AddRepoContainer,
-    AddRepoBlock,
-    Overlay,
-    Meta,
-    MetaTop,
-    MetaBottom,
-    MetaTitle,
-    Close,
-    Input,
-} from './blocks'
+import { BtnSecondary } from '../../btn'
+import HeaderModal from '../../headerModal'
+import { TextInput } from '../../input'
+
+export const Input = styled(TextInput)`
+    width: 100%;
+    margin-right: 10px;
+`
 
 const AddRepoModal = ({ addRepo, switchOpen, currentRepo }) => {
     const [value, setValue] = useState(currentRepo || '')
@@ -40,26 +35,15 @@ const AddRepoModal = ({ addRepo, switchOpen, currentRepo }) => {
     }, [addRepo, switchOpen, value])
 
     return (
-        <AddRepoContainer>
-            <Overlay onClick={switchOpen} />
-            <AddRepoBlock>
-                <MetaTop>
-                    <MetaTitle>Add Local Repository</MetaTitle>
-                    <Close onClick={switchOpen}>
-                        <Icon size={16} icon={remove} />
-                    </Close>
-                </MetaTop>
-                <Meta>
-                    <Input value={value} onChange={handleChange} />
-                    <BtnSecondary onClick={handleChoose}>Choose...</BtnSecondary>
-                </Meta>
-
-                <MetaBottom>
-                    <BtnSecondary onClick={switchOpen}>cancel</BtnSecondary>
-                    <BtnPrimary onClick={handleAdd}>Add Repository</BtnPrimary>
-                </MetaBottom>
-            </AddRepoBlock>
-        </AddRepoContainer>
+        <HeaderModal
+            onClose={switchOpen}
+            title="Add Local Repository"
+            confirmTxt="Add Repository"
+            onConfirm={handleAdd}
+        >
+            <Input value={value} onChange={handleChange} />
+            <BtnSecondary onClick={handleChoose}>Choose...</BtnSecondary>
+        </HeaderModal>
     )
 }
 

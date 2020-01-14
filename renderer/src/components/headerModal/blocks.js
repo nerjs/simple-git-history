@@ -1,8 +1,7 @@
 import styled from 'styled-components'
-import { getColor } from '../../../data/theme'
-import { TextInput } from '../../input'
+import { getColor } from '../../data/theme'
 
-export const AddRepoContainer = styled.div`
+export const HeaderModalContainer = styled.div`
     position: fixed;
     top: 0;
     left: 0;
@@ -21,7 +20,7 @@ export const Overlay = styled.div`
     z-index: 1;
 `
 
-export const AddRepoBlock = styled.div`
+export const HeaderModalBlock = styled.div`
     position: absolute;
     top: 50%;
     left: 50%;
@@ -56,9 +55,4 @@ export const MetaBottom = styled(Meta)`
 
 export const MetaTitle = styled.h3`
     font-size: 14px;
-`
-
-export const Input = styled(TextInput)`
-    width: 100%;
-    margin-right: 10px;
 `

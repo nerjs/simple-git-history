@@ -28,7 +28,7 @@ const HeaderModal = ({ onClose, title, children, cancelTxt, onConfirm, confirmTx
                 <Meta>{children}</Meta>
 
                 <MetaBottom>
-                    <BtnSecondary onClick={switchOpen}>{cancelTxt || 'Cancel'}</BtnSecondary>
+                    <BtnSecondary onClick={onClose}>{cancelTxt || 'Cancel'}</BtnSecondary>
                     <BtnPrimary onClick={onConfirm}>{confirmTxt || 'Confirm'}</BtnPrimary>
                 </MetaBottom>
             </HeaderModalBlock>

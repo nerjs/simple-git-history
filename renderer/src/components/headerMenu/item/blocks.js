@@ -1,5 +1,5 @@
 import styled, { css, keyframes } from 'styled-components'
-import { getColor, getSize } from '../../data/theme'
+import { getColor, getSize } from '../../../data/theme'
 
 const blink = keyframes`
     from {

@@ -1,9 +1,21 @@
 import React from 'react'
 import styled from 'styled-components'
+import { TextInput } from '../../input'
 import { Icon } from 'react-icons-kit'
 import { ic_add_to_queue } from 'react-icons-kit/md/ic_add_to_queue'
 import { BtnSecondary } from '../../btn'
-import { useAddRepo } from '../addRepo'
+
+export const HeaderMenuContainer = styled.div``
+
+export const HeaderMenuListContainer = styled.div`
+    margin: 20px 0px;
+`
+
+export const HeaderMenuInput = styled(TextInput)`
+    width: 90%;
+    margin: 3px auto;
+    display: block;
+`
 
 const AddBtnSecondary = styled(BtnSecondary)`
     display: block;
@@ -23,15 +35,9 @@ const AddBtnSecondary = styled(BtnSecondary)`
     }
 `
 
-const AddBtn = () => {
-    const { switchAddRepo } = useAddRepo()
-
-    return (
-        <AddBtnSecondary onClick={switchAddRepo}>
-            <Icon icon={ic_add_to_queue} />
-            Add
-        </AddBtnSecondary>
-    )
-}
-
-export default AddBtn
+export const AddBtn = ({ onClick, label }) => (
+    <AddBtnSecondary onClick={onClick}>
+        <Icon icon={ic_add_to_queue} />
+        {label}
+    </AddBtnSecondary>
+)

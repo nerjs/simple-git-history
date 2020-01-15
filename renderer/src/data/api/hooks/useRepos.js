@@ -14,6 +14,7 @@ import {
     OPEN_REPO,
 } from '../../../../../utils/events'
 import reposListReducer from './reposListReducer'
+import useSubscriber from '../useSubscriber'
 
 export default () => {
     const [reposLoad, setReposLoad] = useState(false)
@@ -21,26 +22,21 @@ export default () => {
     const [currentRepo, setCurrentRepo] = useState(null)
     const [listRepos, dispatchList] = useReducer(reposListReducer, [])
 
+    useSubscriber({
+        [REPOS_LOAD]: (_, l) => {
+            setReposLoad(!!l)
+            if (!l && !reposLoaded) setReposLoaded(true)
+        },
+        [CURRENT_REPO]: (_, cr) => setCurrentRepo(cr),
+        [LIST_REPOS]: (_, list) => dispatchList({ type: LIST_REPOS, payload: list }),
+        [CHANGE_CURRENT_REPO]: (_, str) => setCurrentRepo(str),
+        [ADD_REPO_IN_LIST]: (_, payload) => dispatchList({ type: ADD_REPO_IN_LIST, payload }),
+        [CHANGE_REPO]: (_, payload) => dispatchList({ type: CHANGE_REPO, payload }),
+        [REMOVE_REPO]: (_, payload) => dispatchList({ type: REMOVE_REPO, payload }),
+    })
+
     useEffect(() => {
-        const allEvents = {
-            [REPOS_LOAD]: (_, l) => {
-                setReposLoad(!!l)
-                if (!l && !reposLoaded) setReposLoaded(true)
-            },
-            [CURRENT_REPO]: (_, cr) => setCurrentRepo(cr),
-            [LIST_REPOS]: (_, list) => dispatchList({ type: LIST_REPOS, payload: list }),
-            [CHANGE_CURRENT_REPO]: (_, str) => setCurrentRepo(str),
-            [ADD_REPO_IN_LIST]: (_, payload) => dispatchList({ type: ADD_REPO_IN_LIST, payload }),
-            [CHANGE_REPO]: (_, payload) => dispatchList({ type: CHANGE_REPO, payload }),
-            [REMOVE_REPO]: (_, payload) => dispatchList({ type: REMOVE_REPO, payload }),
-        }
-
-        Object.keys(allEvents).forEach(key => ipcRenderer.on(key, allEvents[key]))
-
         ipcRenderer.send(START)
-
-        return () =>
-            Object.keys(allEvents).forEach(key => ipcRenderer.removeListener(key, allEvents[key]))
     }, [])
 
     const addRepo = useCallback(strPath => ipcRenderer.send(ADD_REPO, strPath), [])

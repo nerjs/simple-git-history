@@ -1,10 +1,8 @@
 import React from 'react'
-import styled, { css } from 'styled-components'
-import { display } from 'react-icons-kit/icomoon/display'
+import styled from 'styled-components'
 import { getSize, getColor } from '../../data/theme'
-import DropDownHeader from '../ddHeader'
 import Repo from '../repo'
-import BtnHeader from '../btnHeader'
+import Branches from '../branches'
 
 const HeaderContainer = styled.div`
     width: 100%;
@@ -17,13 +15,7 @@ const Header = ({ headerHeight }) => {
     return (
         <HeaderContainer headerHeight={headerHeight}>
             <Repo />
-            <DropDownHeader title="title" label="label" icon={display} body={Repo} />
-            <BtnHeader
-                title="titledwecfweafcarearfcrfrfva czsrf adawefwe xefweafadaewwedcarvarfareganakjrfbzrhfjzkcbhjzbjfdzsvbcszjd"
-                label="label dfcef aefdwsefca"
-                iconLeft={display}
-                iconRight={display}
-            />
+            <Branches />
         </HeaderContainer>
     )
 }

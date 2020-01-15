@@ -22,6 +22,18 @@ class Git extends CoreGit {
                 remote: remote.trim() || null,
             }))
     }
+
+    async checkout(name) {
+        return this.git(`checkout ${name}`)
+    }
+
+    async addBranch(name) {
+        return this.git(`branch ${name}`)
+    }
+
+    async removeBranch(name) {
+        return this.git(`branch -D ${name}`)
+    }
 }
 
 // ;(async () => {

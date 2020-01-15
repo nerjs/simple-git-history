@@ -2,11 +2,13 @@ const EE = require('events')
 const path = require('path')
 const gitUrlParse = require('git-url-parse')
 const exec = require('../../utils/exec')
+const GitError = require('./utils/error')
 const {
     PATHNAME,
     WATCHED,
-    EVENT_ERROR,
-    EVENT_GIT,
+    ERROR,
+    GIT,
+    DESTROY,
     START_WATCH,
     END_WATCH,
     CHANGE,
@@ -27,29 +29,17 @@ class CoreGit extends EE {
         return this[WATCHED]
     }
 
-    set pathname(np) {
-        let canWatch = false
-        if (this.watched) {
-            this.watchEnd()
-            canWatch = true
-        }
-        this[PATHNAME] = np
-
-        if (canWatch) this.watch()
-    }
-
     async git(str) {
-        const res = await exec(`git --git-dir=${path.join(this.pathname, '.git')} ${str}`)
+        try {
+            const res = await exec(`cd ${this.pathname} && git ${str}`)
+            this.emit(GIT, res.stdout || res.stderr)
 
-        if (res.stderr) {
-            const err = new Error(res.stderr)
-            this.emit(EVENT_ERROR, err)
+            return res.stdout || res.stderr
+        } catch (e) {
+            const err = new GitError(e, this.pathname, str)
+            this.emit(ERROR, err)
             throw err
         }
-
-        this.emit(EVENT_GIT, res.stdout)
-
-        return res.stdout
     }
 
     async getUrl(natural) {
@@ -66,8 +56,15 @@ class CoreGit extends EE {
     }
 
     watchEnd() {
+        if (!this[WATCHED]) return
         this[WATCHED] = false
         this.emit(END_WATCH, this.pathname)
+    }
+
+    destroy() {
+        this.watchEnd()
+        this.emit(DESTROY, this.pathname)
+        this.eventNames().forEach(eventName => this.removeAllListeners(eventName))
     }
 }
 

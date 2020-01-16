@@ -18,7 +18,6 @@ class CoreGit extends EE {
     constructor(pathname) {
         super()
         this[PATHNAME] = pathname
-        this[WATCHED] = false
     }
 
     get pathname() {
@@ -50,19 +49,7 @@ class CoreGit extends EE {
         return gitUrlParse.stringify(gitUrlParse(naturalUrl), 'https')
     }
 
-    watch() {
-        this[WATCHED] = true
-        this.emit(START_WATCH, this.pathname)
-    }
-
-    watchEnd() {
-        if (!this[WATCHED]) return
-        this[WATCHED] = false
-        this.emit(END_WATCH, this.pathname)
-    }
-
     destroy() {
-        this.watchEnd()
         this.emit(DESTROY, this.pathname)
         this.eventNames().forEach(eventName => this.removeAllListeners(eventName))
     }

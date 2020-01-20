@@ -2,6 +2,28 @@ const fs = require('fs')
 const path = require('path')
 const debounce = require('debounce')
 
+const REMOVE = Symbol('remove')
+const watchers = new Map()
+
+const getWatcher = pathname => {
+    if (watchers.has(pathname)) return watchers.get(pathname)
+
+    const watcher = fs.watch(pathname, { recursive: true, persistent: false })
+
+    const removeHandler = () => {
+        if (watcher.listeners('change').length > 0) return
+        watcher.removeListener(REMOVE, removeHandler)
+        watchers.delete(pathname)
+        watcher.close()
+    }
+
+    watcher.on(REMOVE, removeHandler)
+
+    watchers.set(pathname, watcher)
+
+    return watcher
+}
+
 module.exports = (pathname, cb) => {
     const results = new Map()
 
@@ -24,12 +46,12 @@ module.exports = (pathname, cb) => {
         handlerDb()
     }
 
-    const watcher = fs.watch(pathname, { recursive: true })
+    const watcher = getWatcher(pathname)
 
     watcher.on('change', handler)
 
     return () => {
         watcher.removeListener('change', handler)
-        watcher.close()
+        watcher.emit(REMOVE)
     }
 }

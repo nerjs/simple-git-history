@@ -3,6 +3,7 @@ const gitUrlParse = require('git-url-parse')
 const exec = require('../../utils/exec')
 const GitError = require('./utils/error')
 const watcher = require('./utils/watcher')
+const GitQuery = require('./utils/query')
 
 const {
     PATHNAME,
@@ -35,8 +36,10 @@ class CoreGit extends EE {
     }
 
     async git(str) {
+        const query = str instanceof GitQuery ? str : new GitQuery(str)
+
         try {
-            const res = await exec(`cd ${this.pathname} && git ${str}`)
+            const res = await exec(`cd ${this.pathname} && ${query}`)
             this.emit(GIT, res.stdout || res.stderr)
 
             return res.stdout || res.stderr

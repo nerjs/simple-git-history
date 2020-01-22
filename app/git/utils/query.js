@@ -13,7 +13,7 @@ class GitQuery {
         return `${this.hasGit ? '' : 'git '}${this.str}${
             this.hasInlineFormat || !this.format
                 ? ''
-                : ` --format="${queryString.stringify(this.format)}"`
+                : ` --format="${queryString.stringify(this.format, { encode: false })}"`
         }`
     }
 

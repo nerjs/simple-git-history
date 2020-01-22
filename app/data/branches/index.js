@@ -16,11 +16,8 @@ const Git = require('../../git')
 module.exports = (sender, storage) => {
     let git
 
-    const reloadInfoBranch = async () => {
-        const branches = await git.branch()
-
+    const reloadInfoBranch = branches => {
         sender.send(LIST_BRANCHES, branches)
-
         const currentBranch = branches.find(({ head }) => !!head)
         sender.send(CURRENT_BRANCH, currentBranch ? currentBranch.name : '')
     }
@@ -34,13 +31,15 @@ module.exports = (sender, storage) => {
 
         git.on('error', console.error)
 
-        await reloadInfoBranch()
+        const branches = await git.branch()
+        reloadInfoBranch(branches)
+
+        git.watchBranch((prev, cur) => reloadInfoBranch(cur))
     }
 
     const handleCheckoutBranch = async (_, name) => {
         try {
             await git.checkout(name)
-            await reloadInfoBranch()
         } catch (e) {
             notif.error('branch', e.message)
         }
@@ -61,7 +60,6 @@ module.exports = (sender, storage) => {
 
         try {
             await git.removeBranch(name)
-            await reloadInfoBranch()
             notif.info('branch', `Branch ${name} removed successfully`)
         } catch (e) {
             notif.error('branch', e.message)

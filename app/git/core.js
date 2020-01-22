@@ -131,6 +131,7 @@ class CoreGit extends EE {
     }
 
     destroy() {
+        this.stopWatch()
         this.emit(DESTROY, this.pathname)
         this.eventNames().forEach(eventName => this.removeAllListeners(eventName))
     }

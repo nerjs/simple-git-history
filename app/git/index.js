@@ -1,39 +1,30 @@
 const qs = require('query-string')
-const { branchFormat, reflogFormat } = require('./utils/formats')
+const { branchFormat, branchDefFormat, reflogFormat } = require('./utils/formats')
 const CoreGit = require('./core')
-const {
-    PATHNAME,
-    WATCHED,
-    ERROR,
-    GIT,
-    DESTROY,
-    START_WATCH,
-    END_WATCH,
-    CHANGE,
-} = require('./utils/constants')
+const GitQuery = require('./utils/query')
+
 class Git extends CoreGit {
     constructor(pathname) {
         super(pathname)
         this.branchFormat = branchFormat
+        this.branchDefFormat = branchDefFormat
         this.reflogFormat = reflogFormat
-
-        this[WATCHED] = false
     }
 
     async branch() {
-        const res = await this.git(
-            `branch --format="${qs.stringify(this.branchFormat, { encode: false })}"`,
-        )
+        const gq = new GitQuery('branch', this.branchFormat, this.branchDefFormat)
 
-        return res
-            .split('\n')
-            .filter(v => !!v)
-            .map(v => qs.parse(v))
-            .map(({ head, remote, ...v }) => ({
-                ...v,
-                head: head.trim() ? true : false,
-                remote: remote.trim() || null,
-            }))
+        const res = await this.git(gq)
+
+        return gq.parse(res)
+    }
+
+    watchBranch(cb) {
+        const gq = new GitQuery('branch', this.branchFormat, this.branchDefFormat)
+
+        return this.watch(gq, (prev, current) => {
+            cb(gq.parse(prev), gq.parse(current))
+        })
     }
 
     async checkout(name) {
@@ -65,34 +56,12 @@ class Git extends CoreGit {
                 authorDate: Number(authorDate),
                 committerDate: Number(committerDate),
             }))
-    }
-
-    watch() {
-        this[WATCHED] = true
-        this.emit(START_WATCH, this.pathname)
-    }
-
-    watchEnd() {
-        if (!this[WATCHED]) return
-        this[WATCHED] = false
-        this.emit(END_WATCH, this.pathname)
+            .reverse()
     }
 
     destroy() {
-        this.watchEnd()
         super.destroy()
     }
 }
-
-// ;(async () => {
-//     const git = new Git('/Users/mac/homework/simple-git-history')
-//     console.log(
-//         (await git.branch()).filter(({ name }) =>
-//             ['master', 'develop', 'test_git_branch', 'origin/refactoring-handlers'].find(
-//                 n => n === name,
-//             ),
-//         ),
-//     )
-// })().catch(console.error)
 
 module.exports = Git

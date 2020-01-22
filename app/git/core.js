@@ -61,7 +61,6 @@ class CoreGit extends EE {
     watch(strQuery, cb) {
         if (!this[WATCHED]) {
             this[STOP_WATCH] = watcher(this.pathname, files => {
-                console.log(files)
                 this.emit(INNER_CHANGE)
                 this.emit(CHANGE, files)
             })
@@ -69,7 +68,7 @@ class CoreGit extends EE {
             this.emit(START_WATCH)
         }
 
-        const watchEventName = Symbol.for(strQuery)
+        const watchEventName = Symbol.for(`${strQuery}`)
 
         if (!this[WATCH_CACHE].has(watchEventName)) {
             const watchHandler = async () => {
@@ -108,7 +107,7 @@ class CoreGit extends EE {
     }
 
     stopWatch(strQuery, cb) {
-        const watchEventName = Symbol.for(strQuery)
+        const watchEventName = Symbol.for(`${strQuery}`)
         if (!this[WATCHED] || !this[WATCH_CACHE].has(watchEventName)) return
 
         if (cb) {

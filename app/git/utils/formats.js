@@ -6,6 +6,11 @@ exports.branchFormat = {
     tree: '%(tree)',
 }
 
+exports.branchDefFormat = {
+    remote: null,
+    head: v => !!v,
+}
+
 exports.reflogFormat = {
     hash: '%H',
     selector: '%gD',

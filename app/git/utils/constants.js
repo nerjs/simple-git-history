@@ -11,6 +11,3 @@ exports.START_WATCH = 'watch:start'
 exports.END_WATCH = 'watch:end'
 exports.CHANGE = 'watch:change'
 exports.INNER_CHANGE = Symbol('watch:change')
-
-exports.TIMER_ID = Symbol('TIMER ID')
-exports.REFLOGS = Symbol('REFLOGS')

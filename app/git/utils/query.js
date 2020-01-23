@@ -15,7 +15,7 @@ class GitQuery {
     parse(str) {
         const { stdout, stderr } = typeof str === 'string' ? { stdout: str } : str
         return {
-            message: (stderr || stdout || '').trim(),
+            message: stderr || stdout || '',
             details: stderr ? (stdout || '').trim() || null : null,
         }
     }

@@ -4,6 +4,7 @@ const CoreGit = require('./core')
 const GitQuery = require('./utils/query')
 const QueryFormat = require('./utils/queryFormat')
 const QueryBranch = require('./utils/queryBranch')
+const QueryStatus = require('./utils/queryStatus')
 
 class Git extends CoreGit {
     constructor(pathname) {
@@ -33,6 +34,14 @@ class Git extends CoreGit {
         return this.git(new QueryBranch(`branch -D ${name}`))
     }
 
+    async status() {
+        return this.git(new QueryStatus())
+    }
+
+    watchStatus(cb) {
+        return this.watch(new QueryStatus(), cb)
+    }
+
     async reflog(count = 10) {
         const res = await this.git(
             `reflog --max-count=${count} --format="${qs.stringify(this.reflogFormat, {
@@ -59,3 +68,11 @@ class Git extends CoreGit {
 }
 
 module.exports = Git
+;(async () => {
+    const git = new Git('/Users/mac/homework/tg')
+
+    git.watchStatus((...a) => console.log(a))
+    // const { message } = await git.git('status --porcelain')
+    // console.log([...message].length, message.length, message, [...message], await git.status())
+    setInterval(() => {}, 1000000)
+})().catch(console.error)

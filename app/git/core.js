@@ -1,5 +1,6 @@
 const EE = require('events')
 const gitUrlParse = require('git-url-parse')
+const path = require('path')
 const exec = require('../../utils/exec')
 const watcher = require('./utils/watcher')
 const GitQuery = require('./utils/query')
@@ -60,10 +61,14 @@ class CoreGit extends EE {
 
     watch(strQuery, cb) {
         if (!this[WATCHED]) {
-            this[STOP_WATCH] = watcher(this.pathname, files => {
-                this.emit(INNER_CHANGE)
-                this.emit(CHANGE, files)
-            })
+            this[STOP_WATCH] = watcher(
+                this.pathname,
+                files => {
+                    this.emit(INNER_CHANGE)
+                    this.emit(CHANGE, files)
+                },
+                [path.join(this.pathname, '.git', 'index.lock')],
+            )
             this[WATCHED] = true
             this.emit(START_WATCH)
         }

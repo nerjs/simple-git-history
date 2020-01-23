@@ -24,7 +24,7 @@ const getWatcher = pathname => {
     return watcher
 }
 
-module.exports = (pathname, cb) => {
+module.exports = (pathname, cb, ignoreFiles = []) => {
     const results = new Map()
 
     const handlerDb = debounce(() => {
@@ -42,6 +42,12 @@ module.exports = (pathname, cb) => {
     }, 100)
 
     const handler = (event, ptn) => {
+        if (
+            ignoreFiles &&
+            (ignoreFiles.indexOf(ptn) >= 0 || ignoreFiles.indexOf(path.join(pathname, ptn)) >= 0)
+        )
+            return
+
         results.set(event, (results.get(event) || new Set()).add(ptn))
         handlerDb()
     }

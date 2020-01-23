@@ -2,6 +2,8 @@ const qs = require('query-string')
 const { branchFormat, branchDefFormat, reflogFormat } = require('./utils/formats')
 const CoreGit = require('./core')
 const GitQuery = require('./utils/query')
+const QueryFormat = require('./utils/queryFormat')
+const QueryBranch = require('./utils/queryBranch')
 
 class Git extends CoreGit {
     constructor(pathname) {
@@ -12,31 +14,23 @@ class Git extends CoreGit {
     }
 
     async branch() {
-        const gq = new GitQuery('branch', this.branchFormat, this.branchDefFormat)
-
-        const res = await this.git(gq)
-
-        return gq.parse(res)
+        return this.git(new QueryFormat('branch', this.branchFormat, this.branchDefFormat))
     }
 
     watchBranch(cb) {
-        const gq = new GitQuery('branch', this.branchFormat, this.branchDefFormat)
-
-        return this.watch(gq, (prev, current) => {
-            cb(gq.parse(prev), gq.parse(current))
-        })
+        return this.watch(new QueryFormat('branch', this.branchFormat, this.branchDefFormat), cb)
     }
 
     async checkout(name) {
-        return this.git(`checkout ${name}`)
+        return this.git(new QueryBranch(`checkout ${name}`))
     }
 
     async addBranch(name) {
-        return this.git(`branch ${name}`)
+        return this.git(new QueryBranch(`branch ${name}`))
     }
 
     async removeBranch(name) {
-        return this.git(`branch -D ${name}`)
+        return this.git(new QueryBranch(`branch -D ${name}`))
     }
 
     async reflog(count = 10) {

@@ -1,7 +1,6 @@
 const EE = require('events')
 const gitUrlParse = require('git-url-parse')
 const exec = require('../../utils/exec')
-const GitError = require('./utils/error')
 const watcher = require('./utils/watcher')
 const GitQuery = require('./utils/query')
 
@@ -35,16 +34,17 @@ class CoreGit extends EE {
         return this[WATCHED]
     }
 
-    async git(str) {
+    async git(str, ignoreParse) {
         const query = str instanceof GitQuery ? str : new GitQuery(str)
 
         try {
             const res = await exec(`cd ${this.pathname} && ${query}`)
-            this.emit(GIT, res.stdout || res.stderr)
+            const parsed = query.parse(res)
+            this.emit(GIT, parsed)
 
-            return res.stdout || res.stderr
+            return ignoreParse ? res.stdout || res.stderr : parsed
         } catch (e) {
-            const err = new GitError(e, this.pathname, str)
+            const err = query.parseError(e, this.pathname)
             this.emit(ERROR, err)
             throw err
         }
@@ -68,11 +68,12 @@ class CoreGit extends EE {
             this.emit(START_WATCH)
         }
 
-        const watchEventName = Symbol.for(`${strQuery}`)
+        const query = strQuery instanceof GitQuery ? strQuery : new GitQuery(strQuery)
+        const watchEventName = Symbol.for(`${query}`)
 
         if (!this[WATCH_CACHE].has(watchEventName)) {
             const watchHandler = async () => {
-                const newData = await this.git(strQuery)
+                const newData = await this.git(query, true)
                 const cache = this[WATCH_CACHE].get(watchEventName)
                 const { prevData } = cache
                 if (prevData === newData) return
@@ -80,7 +81,7 @@ class CoreGit extends EE {
                 this[WATCH_CACHE].set(watchEventName, { ...cache, prevData: newData })
                 if (prevData === null) return
 
-                this.emit(watchEventName, prevData, newData)
+                this.emit(watchEventName, query.parse(prevData), query.parse(newData))
             }
 
             this[WATCH_CACHE].set(watchEventName, {
@@ -88,7 +89,7 @@ class CoreGit extends EE {
                 watchHandler,
             })
 
-            this.git(strQuery).then(r => {
+            this.git(query, true).then(r => {
                 if (!this[WATCH_CACHE].has(watchEventName)) return
                 const cache = this[WATCH_CACHE].get(watchEventName)
                 if (cache.prevData) return

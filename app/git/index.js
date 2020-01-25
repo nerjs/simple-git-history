@@ -68,11 +68,3 @@ class Git extends CoreGit {
 }
 
 module.exports = Git
-;(async () => {
-    const git = new Git('/Users/mac/homework/tg')
-
-    git.watchStatus((...a) => console.log(a))
-    // const { message } = await git.git('status --porcelain')
-    // console.log([...message].length, message.length, message, [...message], await git.status())
-    setInterval(() => {}, 1000000)
-})().catch(console.error)

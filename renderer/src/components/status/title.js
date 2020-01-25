@@ -57,22 +57,19 @@ const info = ({ conflicts, untracked, index = {}, work = {} }) => {
     return res
 }
 
-const TitleStatus = ({ ahead, behind, ...props }) => {
-    console.log(props)
-    return (
-        <TitleStatusContainer>
-            <HeadBadge ahead={ahead} behind={behind} />{' '}
-            {info(props).map(({ label, count }) => (
-                <TitleFileInfoContainer
-                    key={label}
-                    label={label}
-                    title={`${gitStatusNames[label]} ${count} files`}
-                >
-                    {count}
-                </TitleFileInfoContainer>
-            ))}
-        </TitleStatusContainer>
-    )
-}
+const TitleStatus = ({ ahead, behind, ...props }) => (
+    <TitleStatusContainer>
+        <HeadBadge ahead={ahead} behind={behind} />{' '}
+        {info(props).map(({ label, count }) => (
+            <TitleFileInfoContainer
+                key={label}
+                label={label}
+                title={`${gitStatusNames[label]} ${count} files`}
+            >
+                {count}
+            </TitleFileInfoContainer>
+        ))}
+    </TitleStatusContainer>
+)
 
 export default TitleStatus

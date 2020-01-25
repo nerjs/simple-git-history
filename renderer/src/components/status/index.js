@@ -16,7 +16,11 @@ const Status = () => {
     return (
         <DropDownHeader
             icon={layers}
-            label={!status.row || status.row.length < 2 ? 'Status' : undefined}
+            label={
+                (!status.row || status.row.length < 2) && !status.ahead && !status.behind
+                    ? 'Status'
+                    : undefined
+            }
             title={<TitleStatus {...status} />}
             body={BodyStatus}
         />

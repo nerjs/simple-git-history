@@ -1,3 +1,5 @@
+const gitStatusNames = require('../../../utils/gitStatusNames')
+
 class GitStatus {
     constructor(str) {
         if (typeof str !== 'string')
@@ -12,20 +14,8 @@ class GitStatus {
         this.work = this.createEmpty()
         this.untracked = []
         this.conflicts = []
-        this.labels = GitStatus.NAMES
 
         this.parse()
-    }
-
-    static NAMES = {
-        M: 'modified',
-        A: 'added',
-        D: 'deleted',
-        R: 'renamed',
-        C: 'copied',
-        U: 'unmerged', // updated but unmerged
-        '!': 'conflicts',
-        '?': 'untracked',
     }
 
     createEmpty() {
@@ -97,9 +87,8 @@ class GitStatus {
             return
         }
 
-        if (index && this.index[GitStatus.NAMES[index]])
-            this.index[GitStatus.NAMES[index]].push(file)
-        if (work && this.work[GitStatus.NAMES[work]]) this.work[GitStatus.NAMES[work]].push(file)
+        if (index && this.index[gitStatusNames[index]]) this.index[gitStatusNames[index]].push(file)
+        if (work && this.work[gitStatusNames[work]]) this.work[gitStatusNames[work]].push(file)
     }
 }
 

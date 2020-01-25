@@ -20,4 +20,12 @@ export default {
     // text
     primary: '#d1d5da',
     secondary: '#959da5',
+
+    gitStatus: {
+        '?': '#ceaeae',
+        '!': '#FF0F09',
+        M: '#3AAC8F',
+        R: '#FFBE56',
+        D: '#c33c3c',
+    },
 }

@@ -12,6 +12,7 @@ class GitStatus {
         this.work = this.createEmpty()
         this.untracked = []
         this.conflicts = []
+        this.labels = GitStatus.NAMES
 
         this.parse()
     }
@@ -23,6 +24,8 @@ class GitStatus {
         R: 'renamed',
         C: 'copied',
         U: 'unmerged', // updated but unmerged
+        '!': 'conflicts',
+        '?': 'untracked',
     }
 
     createEmpty() {

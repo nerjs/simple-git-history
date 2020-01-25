@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { getSize, getColor } from '../../data/theme'
 import Repo from '../repo'
 import Branches from '../branches'
+import Status from '../status'
 
 const HeaderContainer = styled.div`
     width: 100%;
@@ -16,6 +17,7 @@ const Header = ({ headerHeight }) => {
         <HeaderContainer headerHeight={headerHeight}>
             <Repo />
             <Branches />
+            <Status />
         </HeaderContainer>
     )
 }

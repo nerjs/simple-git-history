@@ -18,3 +18,6 @@ exports.CURRENT_BRANCH = 'branches:current'
 exports.ADD_BRANCH = 'branches:add'
 exports.CHECKOUT_BRANCH = 'branches:checkout'
 exports.REMOVE_BRANCH = 'branches:remove'
+
+exports.CLEAR_STATUS = 'status:clear'
+exports.UPDATE_STATUS = 'status:update'

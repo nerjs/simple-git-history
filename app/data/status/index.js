@@ -21,7 +21,7 @@ module.exports = (sender, storage) => {
 
         sender.send(UPDATE_STATUS, status)
 
-        git.watchStatus((prev, cur) => sender.send(UPDATE_STATUS, status))
+        git.watchStatus((prev, cur) => sender.send(UPDATE_STATUS, cur))
     }
 
     handleReloadRepo()

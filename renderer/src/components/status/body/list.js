@@ -1,18 +1,21 @@
 import React, { useState, useCallback } from 'react'
-import { useApi } from '../../../data/api'
 import { BtnTabsContainer, TabBtn, StatusBodyItem } from './blocks'
 
 const StatusBodyListFiles = () => {
-    const { status } = useApi()
     const [sorted, setSorted] = useState(false)
 
-    const switchSorted = useCallback(() => setSorted(s => !!s), [setSorted])
+    const checkSorted = useCallback(() => setSorted(true), [setSorted])
+    const checkUnsorted = useCallback(() => setSorted(false), [setSorted])
 
     return (
         <StatusBodyItem>
             <BtnTabsContainer>
-                <TabBtn active={sorted}>Sorted</TabBtn>
-                <TabBtn active={!sorted}>Not sorted</TabBtn>
+                <TabBtn active={sorted} onClick={checkSorted}>
+                    Sorted
+                </TabBtn>
+                <TabBtn active={!sorted} onClick={checkUnsorted}>
+                    Not sorted
+                </TabBtn>
             </BtnTabsContainer>
         </StatusBodyItem>
     )

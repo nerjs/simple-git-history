@@ -7,13 +7,13 @@ import StatusBodyControls from './controls'
 
 const BodyStatus = ({}) => {
     const {
-        status: { head, upstream, ahead, behind },
+        status: { head, upstream, ahead, behind, ...status },
     } = useApi()
 
     return (
         <StatusBodyContainer>
             <StatusBodyHead head={head} upstream={upstream} ahead={ahead} behind={behind} />
-            <StatusBodyListFiles />
+            <StatusBodyListFiles {...status} />
             <StatusBodyControls />
             {/* <FilesContainer>
                 <StatusBodyListFiles />

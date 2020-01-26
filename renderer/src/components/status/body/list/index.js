@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react'
-import { BtnTabsContainer, TabBtn, StatusBodyItem } from './blocks'
+import { BtnTabsContainer, TabBtn, StatusBodyItem, StatusListItem } from './blocks'
 
 const StatusBodyListFiles = () => {
     const [sorted, setSorted] = useState(false)
@@ -8,7 +8,7 @@ const StatusBodyListFiles = () => {
     const checkUnsorted = useCallback(() => setSorted(false), [setSorted])
 
     return (
-        <StatusBodyItem>
+        <StatusListItem>
             <BtnTabsContainer>
                 <TabBtn active={sorted} onClick={checkSorted}>
                     Sorted
@@ -17,7 +17,7 @@ const StatusBodyListFiles = () => {
                     Not sorted
                 </TabBtn>
             </BtnTabsContainer>
-        </StatusBodyItem>
+        </StatusListItem>
     )
 }
 

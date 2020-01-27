@@ -2,13 +2,13 @@ import React, { useCallback } from 'react'
 import propTypes from 'prop-types'
 import { HeaderMenuContainer, HeaderMenuListContainer, AddBtn, HeaderMenuInput } from './blocks'
 
-const HeaderMenu = ({ children, addTxt, onAdd, onChangeFilter }) => {
+const HeaderMenu = ({ children, addTxt, onAdd, onChangeFilter, className }) => {
     const handleChangeFilter = useCallback(({ target: { value } }) => onChangeFilter(value), [
         onChangeFilter,
     ])
 
     return (
-        <HeaderMenuContainer>
+        <HeaderMenuContainer className={className}>
             {addTxt && onAdd && <AddBtn onClick={onAdd} label={addTxt || Add} />}
             {onChangeFilter && (
                 <HeaderMenuInput onChange={handleChangeFilter} placeholder="filter..." />

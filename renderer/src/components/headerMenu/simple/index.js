@@ -21,7 +21,7 @@ const HeaderSimpleMenuItem = styled.div`
 
     &:active {
         box-shadow: inset 1px 0 2px #fff8;
-        border-color: #000;
+        /* border-color: #000; */
     }
 
     ${({ error }) =>

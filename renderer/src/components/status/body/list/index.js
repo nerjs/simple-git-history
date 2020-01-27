@@ -1,8 +1,10 @@
 import React, { useState, useCallback } from 'react'
 import { BtnTabsContainer, TabBtn, StatusBodyItem, StatusListItem } from './blocks'
+import SortedInfoView from './sorted'
+import SimpleInfoView from './simple'
 
-const StatusBodyListFiles = () => {
-    const [sorted, setSorted] = useState(false)
+const StatusBodyListFiles = ({ row, ...props }) => {
+    const [sorted, setSorted] = useState(true)
 
     const checkSorted = useCallback(() => setSorted(true), [setSorted])
     const checkUnsorted = useCallback(() => setSorted(false), [setSorted])
@@ -17,6 +19,7 @@ const StatusBodyListFiles = () => {
                     Not sorted
                 </TabBtn>
             </BtnTabsContainer>
+            {sorted ? <SortedInfoView {...props} /> : <SimpleInfoView row={row} />}
         </StatusListItem>
     )
 }

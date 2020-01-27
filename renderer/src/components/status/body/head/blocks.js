@@ -10,14 +10,13 @@ export const StatusHeadItem = styled(StatusBodyItem)`
 export const HeadContainer = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     font-size: 13px;
     margin: 3px 5px;
 `
 
 const HeadItem = styled.div`
-    flex-grow: 1;
     text-align: center;
 `
 

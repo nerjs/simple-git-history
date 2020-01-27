@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components'
 import { getColor } from '../../../../data/theme'
 import { StatusBodyItem } from '../blocks'
+import { HeaderMenu, HeaderSimpleMenuItem } from '../../../headerMenu'
 
 export const StatusListItem = styled(StatusBodyItem)``
 
@@ -47,4 +48,13 @@ export const TabBtn = styled(_TabBtn)`
                       border-bottom-left-radius: 5px;
                   }
               `}
+`
+
+export const SimpleListMenu = styled(HeaderMenu)`
+    margin-top: 10px;
+
+    ${HeaderSimpleMenuItem} {
+        padding: 8px 5px;
+        cursor: default;
+    }
 `

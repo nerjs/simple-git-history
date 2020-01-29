@@ -1,7 +1,12 @@
 import styled, { css } from 'styled-components'
-import { getColor } from '../../../../data/theme'
+import { getColor, getStatusColor } from '../../../../data/theme'
 import { StatusBodyItem } from '../blocks'
-import { HeaderMenu, HeaderSimpleMenuItem } from '../../../headerMenu'
+import {
+    HeaderMenu,
+    HeaderSimpleMenuItem,
+    HeaderGroupMenuItem,
+    GroupMenuItemTitle,
+} from '../../../headerMenu'
 
 export const StatusListItem = styled(StatusBodyItem)``
 
@@ -56,5 +61,16 @@ export const SimpleListMenu = styled(HeaderMenu)`
     ${HeaderSimpleMenuItem} {
         padding: 8px 5px;
         cursor: default;
+    }
+`
+
+export const StyledGroupMenu = styled(HeaderGroupMenuItem)`
+    ${GroupMenuItemTitle} {
+        color: ${getStatusColor};
+        text-transform: lowercase;
+    }
+
+    & svg {
+        color: ${getStatusColor};
     }
 `

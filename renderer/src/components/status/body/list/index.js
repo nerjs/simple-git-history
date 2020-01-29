@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react'
-import { BtnTabsContainer, TabBtn, StatusBodyItem, StatusListItem } from './blocks'
+import { BtnTabsContainer, TabBtn, StatusListItem } from './blocks'
 import SortedInfoView from './sorted'
 import SimpleInfoView from './simple'
 

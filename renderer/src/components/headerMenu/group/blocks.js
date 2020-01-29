@@ -31,11 +31,12 @@ export const GroupMenuItemContainer = styled.div`
 
     ${({ level }) => css`
         ${HeaderSimpleMenuItem} {
-            padding-left: ${(level + 1) * 12 + 3}px;
+            padding-left: ${(level + 1) * 15 + 5}px;
+            padding-right: 5px;
         }
 
         ${GroupMenuItemTitle} {
-            padding-left: ${level * 12 + 3}px;
+            padding-left: ${level * 15 + 5}px;
         }
     `}
 `

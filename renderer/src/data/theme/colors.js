@@ -27,5 +27,6 @@ export default {
         M: '#3AAC8F',
         R: '#FFBE56',
         D: '#c33c3c',
+        A: '#1296DC',
     },
 }

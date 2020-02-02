@@ -42,26 +42,6 @@ class Git extends CoreGit {
         return this.watch(new QueryStatus(), cb)
     }
 
-    async reflog(count = 10) {
-        const res = await this.git(
-            `reflog --max-count=${count} --format="${qs.stringify(this.reflogFormat, {
-                encode: false,
-            })}"`,
-        )
-
-        return res
-            .split('\n')
-            .filter(l => !!l)
-            .map(l => qs.parse(l))
-            .map(({ authorDate, committerDate, refName, ...l }) => ({
-                ...l,
-                refName: refName || null,
-                authorDate: Number(authorDate),
-                committerDate: Number(committerDate),
-            }))
-            .reverse()
-    }
-
     destroy() {
         super.destroy()
     }

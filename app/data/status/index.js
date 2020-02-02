@@ -1,27 +1,34 @@
 const { app } = require('electron')
 
-const { CLEAR_STATUS, UPDATE_STATUS, CHANGE_CURRENT_REPO } = require('../../../utils/events')
+const { CHANGE_CURRENT_REPO } = require('../../../utils/events')
 const { CURRENT } = require('../repos/vars')
 const Git = require('../../git')
+const status = require('./status')
+const fetch = require('./fetch')
+const pull = require('./pull')
+const push = require('./push')
 
 module.exports = (sender, storage) => {
-    let git
+    let git,
+        unsubRow = []
+
+    const unsub = () => {
+        unsubRow.forEach(cb => cb())
+        unsubRow = []
+    }
 
     const handleReloadRepo = async () => {
         const current = await storage.get(CURRENT)
         if (git) git.destroy()
+        unsub()
 
         git = new Git(current)
 
-        sender.send(CLEAR_STATUS)
-
         git.on('error', console.error)
 
-        const status = await git.status()
+        await status(git, sender)
 
-        sender.send(UPDATE_STATUS, status)
-
-        git.watchStatus((prev, cur) => sender.send(UPDATE_STATUS, cur))
+        unsubRow = [fetch(git, sender), pull(git, sender), push(git, sender)]
     }
 
     handleReloadRepo()
@@ -29,6 +36,8 @@ module.exports = (sender, storage) => {
     app.on(CHANGE_CURRENT_REPO, handleReloadRepo)
 
     return () => {
+        if (git) git.destroy()
+        unsub()
         app.removeListener(CHANGE_CURRENT_REPO, handleReloadRepo)
     }
 }

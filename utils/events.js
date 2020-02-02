@@ -21,3 +21,10 @@ exports.REMOVE_BRANCH = 'branches:remove'
 
 exports.CLEAR_STATUS = 'status:clear'
 exports.UPDATE_STATUS = 'status:update'
+
+exports.FETCH_REQUEST = 'status:fetch:request'
+exports.FETCH_LOADING = 'status:fetch:loading'
+exports.PULL_REQUEST = 'status:pull:request'
+exports.PULL_LOADING = 'status:pull:loading'
+exports.PUSH_REQUEST = 'status:push:request'
+exports.PUSH_LOADING = 'status:push:loading'

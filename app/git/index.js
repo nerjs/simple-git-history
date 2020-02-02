@@ -42,6 +42,18 @@ class Git extends CoreGit {
         return this.watch(new QueryStatus(), cb)
     }
 
+    async pull() {
+        return this.git(new GitQuery('pull'))
+    }
+
+    async push() {
+        return this.git(new GitQuery('push'))
+    }
+
+    async fetch() {
+        return this.git(new GitQuery('fetch'))
+    }
+
     destroy() {
         super.destroy()
     }

@@ -14,7 +14,7 @@ const BodyStatus = ({}) => {
         <StatusBodyContainer>
             <StatusBodyHead head={head} upstream={upstream} ahead={ahead} behind={behind} />
             <StatusBodyListFiles {...status} />
-            <StatusBodyControls head={head} upstream={upstream} ahead={ahead} behind={behind} />
+            <StatusBodyControls />
         </StatusBodyContainer>
     )
 }

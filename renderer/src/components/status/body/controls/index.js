@@ -1,10 +1,18 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { StatusControlsItem, EmptyBlock, ControlsBtn } from './blocks'
 import CBtn from './btn'
+import { useApi } from '../../../../data/api'
 
-const StatusBodyControls = ({ head, upstream, ahead, behind }) => {
+const StatusBodyControls = () => {
     const contRef = useRef()
     const [wrap, setWrap] = useState(false)
+    const {
+        status: { upstream, ahead, behind },
+        statusLoaders,
+        fetch,
+        pull,
+        push,
+    } = useApi()
 
     useEffect(() => {
         if (!contRef.current) return
@@ -16,9 +24,15 @@ const StatusBodyControls = ({ head, upstream, ahead, behind }) => {
     if (!upstream) return <EmptyBlock>Upstream is empty</EmptyBlock>
     return (
         <StatusControlsItem ref={contRef} wrapBtns={wrap}>
-            <CBtn>Fetch</CBtn>
-            <CBtn>Pull</CBtn>
-            <CBtn>Push</CBtn>
+            <CBtn loading={statusLoaders.fetch} onClick={fetch}>
+                Fetch
+            </CBtn>
+            <CBtn disabled={!behind} loading={statusLoaders.pull} onClick={pull}>
+                Pull
+            </CBtn>
+            <CBtn disabled={!ahead} loading={statusLoaders.push} onClick={push}>
+                Push
+            </CBtn>
         </StatusControlsItem>
     )
 }

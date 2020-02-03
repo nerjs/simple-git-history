@@ -50,4 +50,13 @@ export const BtnSecondary = styled(Btn)`
     &:active {
         border: 1px solid #999;
     }
+
+    &[disabled] {
+        opacity: 0.7;
+        border: none;
+
+        &:hover {
+            border: none;
+        }
+    }
 `

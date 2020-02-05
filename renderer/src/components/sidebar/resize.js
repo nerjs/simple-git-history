@@ -6,7 +6,7 @@ const ResizeContainer = styled.div`
     background-color: transparent;
     position: absolute;
     top: 0;
-    left: -5px;
+    left: 0;
     bottom: 0;
     width: 5px;
     z-index: 2;

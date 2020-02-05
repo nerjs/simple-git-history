@@ -11,31 +11,35 @@ const ResizeContainer = styled.div`
     width: 5px;
     z-index: 2;
     cursor: ew-resize;
+    user-select: none;
+
+    &:active {
+        background-color: #0000;
+    }
 `
 
+const maxWidth = () => parseInt(document.body.clientWidth / 2)
+
 const ResizeSidebar = ({ setSidebarWidth }) => {
-    const refResize = useRef()
     const [width, setWidth] = useState(250)
 
     const handleResize = useCallback(
-        ({ clientX }) => {
-            if (!refResize.current) return
-
-            setWidth(document.body.clientWidth - clientX)
-        },
-        [setWidth, refResize],
+        ({ clientX }) => clientX && setWidth(parseInt(document.body.clientWidth - clientX)),
+        [setWidth],
     )
 
     useDebounce(
         () => {
-            if (width < 100 || width > document.body.clientWidth / 2) return
+            if (!width) return
+            if (width < 100) return setSidebarWidth(100)
+            if (width > maxWidth()) return setSidebarWidth(maxWidth())
             setSidebarWidth(width)
         },
         10,
         [width, setSidebarWidth],
     )
 
-    return <ResizeContainer onDrag={handleResize} ref={refResize} />
+    return <ResizeContainer draggable onDrag={handleResize} />
 }
 
 export default ResizeSidebar

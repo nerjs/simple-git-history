@@ -7,7 +7,15 @@ import useDDHeader from './useDDheader'
 import BodyWrapper from './body'
 
 const DropDownHeader = ({ title, label, icon, body: BodyComponent }) => {
-    const { active, swithActive, refContainer, refButton, minWidth, offsetLeft } = useDDHeader()
+    const {
+        active,
+        refButton,
+        switchActive,
+        leftOffset,
+        minWidth,
+        refContainer,
+        isRight,
+    } = useDDHeader()
 
     return (
         <>
@@ -17,13 +25,18 @@ const DropDownHeader = ({ title, label, icon, body: BodyComponent }) => {
                 label={label}
                 iconLeft={icon}
                 iconRight={active ? ic_keyboard_arrow_up : ic_keyboard_arrow_down}
-                onClick={swithActive}
+                onClick={switchActive}
                 active={active}
             />
             {active && (
                 <>
                     <OverlayDD />
-                    <BodyWrapper ref={refContainer} minWidth={minWidth} offsetLeft={offsetLeft}>
+                    <BodyWrapper
+                        ref={refContainer}
+                        minWidth={minWidth}
+                        isRight={isRight}
+                        offsetLeft={leftOffset}
+                    >
                         <BodyComponent />
                     </BodyWrapper>
                 </>

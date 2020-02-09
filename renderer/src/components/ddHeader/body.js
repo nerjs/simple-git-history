@@ -1,10 +1,17 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { getSize, getColor } from '../../data/theme'
 
 const BodyWrapper = styled.div`
     position: absolute;
     top: ${getSize('headerHeight')};
-    left: ${({ offsetLeft }) => offsetLeft}px;
+    ${({ isRight, offsetLeft }) =>
+        isRight
+            ? css`
+                  right: 0;
+              `
+            : css`
+                  left: ${offsetLeft}px;
+              `}
     min-width: ${({ minWidth }) => minWidth}px;
     bottom: 0;
     z-index: 200;

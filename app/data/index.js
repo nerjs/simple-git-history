@@ -4,6 +4,7 @@ const repos = require('./repos')
 const Storage = require('../storage')
 const branches = require('./branches')
 const status = require('./status')
+const log = require('./log')
 
 ipcMain.on(START, async ({ sender, frameId }) => {
     const storage = new Storage()
@@ -14,12 +15,15 @@ ipcMain.on(START, async ({ sender, frameId }) => {
 
     const reStatus = await status(sender, storage)
 
+    const reLog = await log(sender, storage)
+
     const removeHandler = e => {
         if (e.frameId !== frameId) return
 
         reRepos()
         reBranches()
         reStatus()
+        reLog()
 
         ipcMain.removeListener(END, removeHandler)
     }

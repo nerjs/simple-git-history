@@ -28,3 +28,7 @@ exports.PULL_REQUEST = 'status:pull:request'
 exports.PULL_LOADING = 'status:pull:loading'
 exports.PUSH_REQUEST = 'status:push:request'
 exports.PUSH_LOADING = 'status:push:loading'
+
+exports.LOG_LOAD = 'log:load'
+exports.LOG_CLEAR = 'log:clear'
+exports.LOG_LIST = 'log:list'

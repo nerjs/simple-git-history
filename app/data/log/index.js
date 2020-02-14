@@ -17,7 +17,6 @@ module.exports = (sender, storage) => {
     const handleReloadRepo = async () => {
         const current = await storage.get(CURRENT)
         if (git) git.destroy()
-        unsub()
 
         git = new Git(current)
 

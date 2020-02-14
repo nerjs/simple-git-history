@@ -1,4 +1,3 @@
-const qs = require('query-string')
 const {
     branchFormat,
     branchDefFormat,

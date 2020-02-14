@@ -1,4 +1,3 @@
-const queryString = require('query-string')
 const QueryFormat = require('./queryFormat')
 
 class QueryLog extends QueryFormat {

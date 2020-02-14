@@ -1,4 +1,3 @@
-const queryString = require('query-string')
 const GitError = require('./error')
 
 class GitQuery {

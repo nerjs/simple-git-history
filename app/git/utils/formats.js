@@ -20,3 +20,24 @@ exports.reflogFormat = {
     treeHash: '%T',
     refName: '%d',
 }
+
+exports.logFormat = {
+    hash: '%H',
+    short: '%h',
+    parent: '%P',
+    authorDate: '%at',
+    committerDate: '%ct',
+    treeHash: '%T',
+    body: '%s',
+    // refBody: '%gs',
+    // d: '%d'
+    // gN: '%gD'
+    // body: '%B',
+    // body: '%b',
+}
+
+exports.logDefFormat = {
+    authorDate: Number,
+    committerDate: Number,
+    parent: str => str.split(' '),
+}

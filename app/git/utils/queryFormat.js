@@ -1,4 +1,4 @@
-const queryString = require('query-string')
+const queryString = require('qs')
 const GitQuery = require('./query')
 
 class QueryFormat extends GitQuery {
@@ -13,7 +13,10 @@ class QueryFormat extends GitQuery {
         const isFormat =
             this.hasInlineFormat || !this.format
                 ? ''
-                : ` --format="${queryString.stringify(this.format, { encode: false })}"`
+                : ` --format="${queryString.stringify(this.format, {
+                      encode: false,
+                      delimiter: '<&&>',
+                  })}"`
 
         return `${super.toString()}${isFormat}`
     }
@@ -31,10 +34,11 @@ class QueryFormat extends GitQuery {
         return this.hasInlineFormat || !this.format
             ? res
             : res.map(s => {
-                  const parsed = queryString.parse(s)
-
+                  const parsed = queryString.parse(s, { delimiter: '<&&>' })
                   Object.keys(parsed).forEach(key => {
                       parsed[key] = parsed[key].trim()
+
+                      if (!this.valuesFormat) return
 
                       if (this.valuesFormat.hasOwnProperty(key)) {
                           if (typeof this.valuesFormat[key] == 'function') {

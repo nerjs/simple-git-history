@@ -6,7 +6,7 @@ import Header from './components/header'
 import Content from './components/content'
 
 const App = () => {
-    const [sidebarWidth, setSidebarWidth] = useState(250)
+    const [sidebarWidth, setSidebarWidth] = useState(100)
 
     const sizeControl = { sidebarWidth, setSidebarWidth }
 

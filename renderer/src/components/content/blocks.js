@@ -7,6 +7,7 @@ export const ContentContainer = styled(AppGridItem).attrs(({ sidebarWidth, heade
         width: `calc(100% - ${sidebarWidth}px)`,
     },
 }))`
+    position: relative;
     height: calc(100% - ${getSize('headerHeight')});
     transition: 0.3s;
 `

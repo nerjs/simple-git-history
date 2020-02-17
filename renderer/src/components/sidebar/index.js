@@ -9,7 +9,7 @@ const Sidebar = ({ headerHeight, sidebarWidth, setSidebarWidth }) => {
         <SidebarContainer headerHeight={headerHeight} sidebarWidth={sidebarWidth}>
             <ResizeSidebar setSidebarWidth={setSidebarWidth} />
             <SidebarContentWrapper>
-                <pre>{JSON.stringify(api, null, 2)}</pre>
+                {/* <pre>{JSON.stringify(api, null, 2)}</pre> */}
             </SidebarContentWrapper>
         </SidebarContainer>
     )

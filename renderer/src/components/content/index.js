@@ -1,12 +1,11 @@
 import React from 'react'
-import { useApi } from '../../data/api'
 import { ContentContainer } from './blocks'
+import GitLogs from '../gitLogs'
 
 const Content = ({ headerHeight, sidebarWidth }) => {
-    const api = useApi()
     return (
         <ContentContainer headerHeight={headerHeight} sidebarWidth={sidebarWidth}>
-            <pre>{JSON.stringify(api, null, 4)}</pre>
+            <GitLogs />
         </ContentContainer>
     )
 }

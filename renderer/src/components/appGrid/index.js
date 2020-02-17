@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import scrollDecorate from './scrollDecorate'
 
 const AppGrid = styled.div`
     width: 100vw;
@@ -14,31 +15,7 @@ export const AppGridItem = styled.div`
     max-height: 100%;
     overflow: auto;
 
-    &::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: #fff2;
-        border-radius: 5px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background: #8889;
-        border-radius: 5px;
-    }
-
-    &:hover {
-        &::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            background: #aaa;
-            box-shadow: inset 0 0 5px #000;
-        }
-    }
+    ${scrollDecorate}
 `
 
 export default AppGrid

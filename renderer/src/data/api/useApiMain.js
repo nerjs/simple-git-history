@@ -7,7 +7,7 @@ export default () => {
     const repos = useRepos()
     const branches = useBranches()
     const status = useStatus()
-    const logs = useLogs(repos)
+    const logs = useLogs(repos, branches)
 
-    return { ...repos, ...branches, ...status, ...logs }
+    return { ...logs, ...repos, ...branches, ...status }
 }

@@ -31,7 +31,7 @@ module.exports = async (sender, repos, pathname) => {
             await asyncStat(path.join(pathname, 'package.json'))
             pkg = JSON.parse(await asyncRead(path.join(pathname, 'package.json')))
         } catch (e) {
-            console.error(e)
+            // console.error(e)
         }
 
         repo.name = getName(repos, pathname, pkg)

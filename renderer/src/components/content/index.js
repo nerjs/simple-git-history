@@ -5,7 +5,7 @@ import GitLogs from '../gitLogs'
 const Content = ({ headerHeight, sidebarWidth }) => {
     return (
         <ContentContainer headerHeight={headerHeight} sidebarWidth={sidebarWidth}>
-            <GitLogs />
+            <GitLogs sidebarWidth={sidebarWidth} />
         </ContentContainer>
     )
 }

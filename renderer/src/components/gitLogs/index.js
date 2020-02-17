@@ -3,11 +3,11 @@ import { GitLogsContainer } from './blocks'
 import { useApi } from '../../data/api'
 import ScrolledLogs from './scroll'
 
-const GitLogs = () => {
+const GitLogs = ({ sidebarWidth }) => {
     const { logs } = useApi()
     return (
         <GitLogsContainer>
-            <ScrolledLogs logs={logs} />
+            <ScrolledLogs logs={logs} sidebarWidth={sidebarWidth} />
         </GitLogsContainer>
     )
 }

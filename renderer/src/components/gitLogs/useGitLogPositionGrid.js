@@ -1,31 +1,36 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 
-export const BLOCK_HEIGHT = 25
+export const BLOCK_WIDTH = 80
+export const BLOCK_HEIGHT = parseInt(BLOCK_WIDTH * 0.4)
 
 export default ({ logs, sidebarWidth }) => {
-    const [cols, setCols] = useState(0)
     const innerRef = useRef()
     const outerRef = useRef()
     const [height, setHeight] = useState(0)
+    const [width, setWidth] = useState(0)
     const [offset, setOffset] = useState(0)
     const [paddings, setPaddings] = useState({ top: 0, bottom: 0 })
     const [arr, setArr] = useState([])
+    const [lines, setLines] = useState(new Map())
 
     useEffect(() => {
-        const resizeHandler = () => setHeight(outerRef.current.clientHeight)
+        const resizeHandler = () => {
+            setHeight(outerRef.current.clientHeight)
+            setWidth(outerRef.current.clientWidth)
+        }
         resizeHandler()
         window.addEventListener('resize', resizeHandler)
 
         return () => window.removeEventListener('resize', resizeHandler)
-    }, [outerRef, setHeight, sidebarWidth])
+    }, [outerRef, setHeight, setWidth, sidebarWidth])
 
     const handleScroll = useCallback(
         ({ target }) =>
             setOffset(o => {
-                if (Math.abs(o - target.scrollTop) < 10) return o
+                if (Math.abs(o - target.scrollTop) < height / 3) return o
                 return target.scrollTop
             }),
-        [innerRef, setOffset],
+        [innerRef, setOffset, height],
     )
 
     useEffect(() => {
@@ -35,14 +40,28 @@ export default ({ logs, sidebarWidth }) => {
         const resultArr = logs.slice(countOffset, countOffset + countRows)
 
         setArr(prevArr => {
-            if (prevArr.length !== resultArr.length) return resultArr
-            if (!prevArr.length) return prevArr
             if (
-                prevArr[0] === resultArr[0] &&
-                prevArr[prevArr.length - 1] === resultArr[resultArr.length - 1]
+                prevArr.length !== resultArr.length ||
+                !prevArr.length ||
+                !resultArr.length ||
+                prevArr[0] !== resultArr[0] ||
+                prevArr[prevArr.length - 1] !== resultArr[resultArr.length - 1]
             )
-                return prevArr
-            return resultArr
+                return resultArr
+
+            return prevArr
+        })
+
+        setLines(prevLines => {
+            const nLinesSet = new Set()
+            resultArr.forEach(({ line }) => nLinesSet.add(line))
+            const nLines = new Map()
+            const sectionLines = parseInt(width / (nLinesSet.size + 1))
+            ;[...nLinesSet]
+                .sort((a, b) => a - b)
+                .forEach((l, i) => nLines.set(l, (i + 1) * sectionLines))
+
+            return nLines
         })
 
         setPaddings(prevPaddings => {
@@ -54,15 +73,7 @@ export default ({ logs, sidebarWidth }) => {
                 bottom: pBottom,
             }
         })
-    }, [height, offset, logs, setPaddings, setArr])
+    }, [height, width, offset, logs, setPaddings, setArr, setLines])
 
-    useEffect(() => {
-        if (logs.length) {
-            setCols(Math.max(...logs.map(({ line }) => line)) + 1)
-        } else {
-            setCols(1)
-        }
-    }, [setCols, logs])
-
-    return { handleScroll, outerRef, innerRef, paddings, arr, cols }
+    return { handleScroll, outerRef, innerRef, paddings, arr, lines }
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { useDebounce } from 'react-use'
 
 export const BLOCK_WIDTH = 80
 export const BLOCK_HEIGHT = parseInt(BLOCK_WIDTH * 0.4)
@@ -33,47 +34,52 @@ export default ({ logs, sidebarWidth }) => {
         [innerRef, setOffset, height],
     )
 
-    useEffect(() => {
-        const countOffset = offset < height ? 0 : parseInt((offset - height) / BLOCK_HEIGHT)
-        const countRows = parseInt((height * 3 + BLOCK_HEIGHT) / BLOCK_HEIGHT)
-        const pTop = countOffset * BLOCK_HEIGHT
-        const resultArr = logs.slice(countOffset, countOffset + countRows)
+    useDebounce(
+        () => {
+            const countOffset = offset < height ? 0 : parseInt((offset - height) / BLOCK_HEIGHT)
+            const countRows = parseInt((height * 3 + BLOCK_HEIGHT) / BLOCK_HEIGHT)
+            const pTop = countOffset * BLOCK_HEIGHT
+            const resultArr = logs.slice(countOffset, countOffset + countRows)
 
-        setArr(prevArr => {
-            if (
-                prevArr.length !== resultArr.length ||
-                !prevArr.length ||
-                !resultArr.length ||
-                prevArr[0] !== resultArr[0] ||
-                prevArr[prevArr.length - 1] !== resultArr[resultArr.length - 1]
-            )
-                return resultArr
+            setArr(prevArr => {
+                if (
+                    prevArr.length !== resultArr.length ||
+                    !prevArr.length ||
+                    !resultArr.length ||
+                    prevArr[0] !== resultArr[0] ||
+                    prevArr[prevArr.length - 1] !== resultArr[resultArr.length - 1]
+                )
+                    return resultArr
 
-            return prevArr
-        })
+                return prevArr
+            })
 
-        setLines(prevLines => {
-            const nLinesSet = new Set()
-            resultArr.forEach(({ line }) => nLinesSet.add(line))
-            const nLines = new Map()
-            const sectionLines = parseInt(width / (nLinesSet.size + 1))
-            ;[...nLinesSet]
-                .sort((a, b) => a - b)
-                .forEach((l, i) => nLines.set(l, (i + 1) * sectionLines))
+            setLines(prevLines => {
+                const nLinesSet = new Set()
+                resultArr.forEach(({ line }) => nLinesSet.add(line))
+                const nLines = new Map()
+                const sectionLines = parseInt(width / (nLinesSet.size + 1))
+                ;[...nLinesSet]
+                    .sort((a, b) => a - b)
+                    .forEach((l, i) => nLines.set(l, (i + 1) * sectionLines))
 
-            return nLines
-        })
+                return nLines
+            })
 
-        setPaddings(prevPaddings => {
-            const pBottom = (logs.length - countOffset - resultArr.length) * BLOCK_HEIGHT
-            if (prevPaddings.top === pTop && prevPaddings.bottom === pBottom) return prevPaddings
+            setPaddings(prevPaddings => {
+                const pBottom = (logs.length - countOffset - resultArr.length) * BLOCK_HEIGHT
+                if (prevPaddings.top === pTop && prevPaddings.bottom === pBottom)
+                    return prevPaddings
 
-            return {
-                top: pTop,
-                bottom: pBottom,
-            }
-        })
-    }, [height, width, offset, logs, setPaddings, setArr, setLines])
+                return {
+                    top: pTop,
+                    bottom: pBottom,
+                }
+            })
+        },
+        10,
+        [height, width, offset, logs, setPaddings, setArr, setLines],
+    )
 
-    return { handleScroll, outerRef, innerRef, paddings, arr, lines }
+    return { handleScroll, outerRef, innerRef, paddings, arr, lines, width, height }
 }

@@ -52,7 +52,7 @@ export const CommitInnerBlock = styled.div.attrs(({ lineOffset }) => ({
 
 export const CommitBlock = styled.div`
     margin: 0;
-    width: calc(100% - ${({ width }) => width}px - 10px);
+    width: 100%;
     margin: 0px auto;
     /* border: 1px solid; */
     text-align: center;

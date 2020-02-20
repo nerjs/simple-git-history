@@ -70,6 +70,7 @@ const prepareList = list => {
 
     list.forEach(item => {
         item.line = item.j
+        item.index = item.i
         delete item.branchChildren
         delete item.mergeChildren
         delete item.i

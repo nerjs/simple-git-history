@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { getColor } from '../../../data/theme'
 
 export const Svg = styled.svg.attrs(({ width, height, top }) => ({
@@ -15,7 +15,7 @@ export const Svg = styled.svg.attrs(({ width, height, top }) => ({
     /* background-color: #fff1; */
 `
 
-export const LinesGridLayer = styled.g``
+export const Layer = styled.g``
 
 export const LinesGridPaths = styled.line.attrs(({ offset, height }) => ({
     x1: 0,
@@ -30,4 +30,19 @@ export const LinesGridPaths = styled.line.attrs(({ offset, height }) => ({
     stroke-width: 2px;
     transition: 0.3s;
     opacity: 0.2;
+`
+
+export const GraphPathSvg = styled.path.attrs(({ d }) => ({
+    d,
+}))`
+    stroke: ${({ color }) => color};
+    stroke-width: 2px;
+    fill: transparent;
+`
+
+export const GraphCircleSvg = styled.circle`
+    ${({ color }) => css`
+        stroke: ${color};
+        fill: ${color};
+    `}
 `

@@ -28,7 +28,7 @@ export const LinesGridPaths = styled.line.attrs(({ offset, height }) => ({
 }))`
     stroke: ${getColor('secondary')};
     stroke-width: 2px;
-    transition: 0.3s;
+    /* transition: 0.3s; */
     opacity: 0.2;
 `
 

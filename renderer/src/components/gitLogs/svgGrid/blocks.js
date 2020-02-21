@@ -1,5 +1,19 @@
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 import { getColor } from '../../../data/theme'
+
+const showAnimate = keyframes`
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+`
+
+const showMixin = css`
+    animation: ${showAnimate} 0.5s linear;
+`
 
 export const Svg = styled.svg.attrs(({ width, height, top }) => ({
     width,
@@ -26,18 +40,17 @@ export const LinesGridPaths = styled.line.attrs(({ offset, height }) => ({
         transform: `translateX(${offset}px)`,
     },
 }))`
-    stroke: ${getColor('secondary')};
+    stroke: #959da522;
     stroke-width: 2px;
     /* transition: 0.3s; */
-    opacity: 0.2;
+    ${showMixin}
 `
 
-export const GraphPathSvg = styled.path.attrs(({ d }) => ({
-    d,
-}))`
+export const GraphPathSvg = styled.path`
     stroke: ${({ color }) => color};
     stroke-width: 2px;
     fill: transparent;
+    ${showMixin}
 `
 
 export const GraphCircleSvg = styled.circle`
@@ -45,4 +58,5 @@ export const GraphCircleSvg = styled.circle`
         stroke: ${color};
         fill: ${color};
     `}
+    ${showMixin}
 `

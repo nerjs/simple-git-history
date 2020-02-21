@@ -28,7 +28,7 @@ export default ({ logs, sidebarWidth }) => {
     const handleScroll = useCallback(
         ({ target }) =>
             setOffset(o => {
-                if (Math.abs(o - target.scrollTop) < height / 3) return o
+                if (Math.abs(o - target.scrollTop) < height / 4) return o
                 return target.scrollTop
             }),
         [innerRef, setOffset, height],
@@ -63,6 +63,7 @@ export default ({ logs, sidebarWidth }) => {
                     .sort((a, b) => a - b)
                     .forEach((l, i) => nLines.set(l, (i + 1) * sectionLines))
 
+                console.log(JSON.stringify([...prevLines]) === JSON.stringify([...nLines]))
                 return nLines
             })
 
@@ -77,7 +78,7 @@ export default ({ logs, sidebarWidth }) => {
                 }
             })
         },
-        10,
+        5,
         [height, width, offset, logs, setPaddings, setArr, setLines],
     )
 

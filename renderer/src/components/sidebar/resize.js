@@ -21,7 +21,7 @@ const ResizeContainer = styled.div`
 const maxWidth = () => parseInt(document.body.clientWidth / 2)
 
 const ResizeSidebar = ({ setSidebarWidth }) => {
-    const [width, setWidth] = useState(100)
+    const [width, setWidth] = useState(400)
 
     const handleResize = useCallback(
         ({ clientX }) => clientX && setWidth(parseInt(document.body.clientWidth - clientX)),

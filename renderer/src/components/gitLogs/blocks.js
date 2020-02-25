@@ -48,6 +48,13 @@ export const CommitInnerBlock = styled.div.attrs(({ lineOffset }) => ({
     color: ${getColor('primary')};
     transform: translate(-50%, -50%);
     /* transition: 0.3s; */
+    cursor: pointer;
+    ${({ active }) =>
+        active
+            ? css`
+                  box-shadow: 0 0 5px #fff;
+              `
+            : ''}
 `
 
 export const CommitBlock = styled.div`

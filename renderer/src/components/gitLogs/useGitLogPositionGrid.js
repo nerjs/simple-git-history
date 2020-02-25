@@ -63,7 +63,6 @@ export default ({ logs, sidebarWidth }) => {
                     .sort((a, b) => a - b)
                     .forEach((l, i) => nLines.set(l, (i + 1) * sectionLines))
 
-                console.log(JSON.stringify([...prevLines]) === JSON.stringify([...nLines]))
                 return nLines
             })
 

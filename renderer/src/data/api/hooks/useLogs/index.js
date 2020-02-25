@@ -4,17 +4,18 @@ import { LOG_CLEAR, LOG_LIST, LOG_LOAD } from '../../../../../../utils/events'
 import { ipcRenderer } from 'electron'
 import prepareList from './prepare'
 
-export default ({ currentRepo }, { currentBranch }) => {
+export default ({ currentRepo }, { currentBranch, listBranches }) => {
     const [logs, setLogs] = useState([])
 
-    useSubscriber({
-        [LOG_CLEAR]: () => setLogs([]),
-        [LOG_LIST]: (_, list) => setLogs(prepareList(list)),
-    })
+    useSubscriber(
+        {
+            [LOG_CLEAR]: () => setLogs([]),
+            [LOG_LIST]: (_, list) => setLogs(prepareList(list, listBranches)),
+        },
+        [listBranches],
+    )
 
     const loadLogs = useCallback(() => ipcRenderer.send(LOG_LOAD), [])
-
-    useEffect(() => loadLogs(), [loadLogs, currentRepo, currentBranch])
 
     return { logs }
 }

@@ -1,5 +1,6 @@
 exports.branchFormat = {
     name: '%(refname:short)',
+    link: '%(objectname)',
     head: '%(HEAD)',
     remote: '%(upstream:remotename)',
     parent: '%(parent)',
@@ -31,21 +32,21 @@ exports.logFormat = {
     body: '%s',
     ref: '%gs',
     refNames: '%D',
-    // D: '%D',
-    // S: '%S',
-    // e: '%e',
-    // gs: '%gs',
-    // GS: '%GS',
-    // GK: '%GK',
-    // GF: '%GF',
-    // GP: '%GP',
-    // gD: '%gD',
-    // gd: '%gd',
-    // gn: '%gn',
-    // gN: '%gN',
-    // refBody: '%gs',
-    // d: '%d'
-    // gN: '%gD'
+    D: '%D',
+    S: '%S',
+    e: '%e',
+    gs: '%gs',
+    GS: '%GS',
+    GK: '%GK',
+    GF: '%GF',
+    GP: '%GP',
+    gD: '%gD',
+    gd: '%gd',
+    gn: '%gn',
+    gN: '%gN',
+    refBody: '%gs',
+    d: '%d',
+    gN: '%gD',
     // body: '%B',
     // body: '%b',
 }
@@ -67,13 +68,13 @@ exports.logDefFormat = {
     authorDate: Number,
     committerDate: Number,
     parent: str => str.split(' ').filter(p => !!p),
-    ref: str => {
-        try {
-            const [, type, message] = `${str}`.match(/^\s?([a-zA-Z\s\(\)]+):\s((.)*)$/)
-            return { type, message, str }
-        } catch {
-            return { type: null, message: null }
-        }
-    },
+    // ref: str => {
+    //     try {
+    //         const [, type, message] = `${str}`.match(/^\s?([a-zA-Z\s\(\)]+):\s((.)*)$/)
+    //         return { type, message, str }
+    //     } catch {
+    //         return { type: null, message: null }
+    //     }
+    // },
     refNames: str => str.replace(/^\s?HEAD\s\-\>\s?/, ''),
 }

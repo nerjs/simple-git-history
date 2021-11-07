@@ -34,7 +34,7 @@
     "debounce": "^1.2.0",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^1.7.0",
-    "electron": "6.1.4",
+    "electron": "13.5.2",
     "electron-devtools-installer": "^2.2.4",
     "express": "^4.17.1",
     "git-url-parse": "^11.1.2",
